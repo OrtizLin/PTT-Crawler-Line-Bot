@@ -119,6 +119,17 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 			columns = append(columns, column)
 			index++
 		}
+		//if serch result is null
+		if index == 0{
+			log.Printf("Echo message to %s: %s", replyToken, message.Text)
+		if _, err := app.bot.ReplyMessage(
+			replyToken,
+			linebot.NewTextMessage("抱歉！目前無 %s 相關文章",message.Text),
+		).Do(); err != nil {
+			return err
+		}
+		}
+		else{
 		template := linebot.NewCarouselTemplate(columns...)
 		if _, err := app.bot.ReplyMessage(
 			replyToken,
@@ -126,6 +137,7 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 		).Do(); err != nil {
 			return err
 		}
+	}
 	}
 	return nil
 
