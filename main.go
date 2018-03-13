@@ -120,24 +120,24 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 			index++
 		}
 		//if serch result is null
-		if index == 0{
+		if index == 0 {
 			log.Printf("Echo message to %s: %s", replyToken, message.Text)
-		if _, err := app.bot.ReplyMessage(
-			replyToken,
-			linebot.NewTextMessage("抱歉！目前無 %s 相關文章",message.Text),
-		).Do(); err != nil {
-			return err
+			if _, err := app.bot.ReplyMessage(
+				replyToken,
+				linebot.NewTextMessage("抱歉！目前無 %s 相關文章", message.Text),
+			).Do(); err != nil {
+				return err
+			}
+		} else {
+			//reply carousel message if search result exist
+			template := linebot.NewCarouselTemplate(columns...)
+			if _, err := app.bot.ReplyMessage(
+				replyToken,
+				linebot.NewTemplateMessage("正妹來囉！", template),
+			).Do(); err != nil {
+				return err
+			}
 		}
-		}
-		else{
-		template := linebot.NewCarouselTemplate(columns...)
-		if _, err := app.bot.ReplyMessage(
-			replyToken,
-			linebot.NewTemplateMessage("正妹來囉！", template),
-		).Do(); err != nil {
-			return err
-		}
-	}
 	}
 	return nil
 
