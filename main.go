@@ -87,11 +87,11 @@ func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
 
 func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, source *linebot.EventSource) error {
 	switch message.Text {
-	case "carousel":
+	case "tonygrr":
 		log.Printf("Echo message to %s: %s", replyToken, message.Text)
 		if _, err := app.bot.ReplyMessage(
 			replyToken,
-			linebot.NewTextMessage(message.Text),
+			linebot.NewTextMessage("http://www.jav777.cc/"),
 		).Do(); err != nil {
 			return err
 		}
@@ -122,7 +122,7 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 		template := linebot.NewCarouselTemplate(columns...)
 		if _, err := app.bot.ReplyMessage(
 			replyToken,
-			linebot.NewTemplateMessage("Carousel alt text", template),
+			linebot.NewTemplateMessage("正妹來囉！", template),
 		).Do(); err != nil {
 			return err
 		}
