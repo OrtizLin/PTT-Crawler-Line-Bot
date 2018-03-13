@@ -96,6 +96,15 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 		).Do(); err != nil {
 			return err
 		}
+	case "訂閱通知":
+		log.Printf("Echo message to %s: %s", replyToken, message.Text)
+		if _, err := app.bot.ReplyMessage(
+			replyToken,
+			linebot.NewTextMessage("功能尚未完成,敬請期待:)"),
+		).Do(); err != nil {
+			return err
+		}
+
 	default:
 
 		session, errs := mgo.Dial(os.Getenv("DBURL"))
