@@ -104,23 +104,27 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 		defer session.Close()
 		c := session.DB("xtest").C("xtest")
 		result := Article{}
+		var columns []*linebot.CarouselColumn
 		iter := c.Find(bson.M{"title": bson.M{"$regex": message.Text}}).Iter()
-
 		for iter.Next(&result) {
-			log.Printf("Unknown event: %v", result.Link)
+			colum := linbot.NewCarouselColumn(
+				thumbnailImageUrl, result.Title, "3/12",
+				linebot.NewURITemplateAction("這裡放URL", result.Link),
+			)
+			columns = append(columns, column)
 		}
-
-		thumbnailImageUrl := "https://www.atanews.net/upload_edit/images/201605/20160524174909_79517e8e.jpg"
-		template := linebot.NewCarouselTemplate(
-			linebot.NewCarouselColumn(
-				thumbnailImageUrl, "[正妹]超星拳婦", "3/12",
-				linebot.NewURITemplateAction("這裡放URL", "https://tw.yahoo.com/"),
-			),
-			linebot.NewCarouselColumn(
-				thumbnailImageUrl, "[正妹]冰冰", "3/12",
-				linebot.NewURITemplateAction("這裡放URL", "https://tw.yahoo.com/"),
-			),
-		)
+		template := linebot.NewCarouselTemplate(columns...)
+		// thumbnailImageUrl := "https://www.atanews.net/upload_edit/images/201605/20160524174909_79517e8e.jpg"
+		// template := linebot.NewCarouselTemplate(
+		// 	linebot.NewCarouselColumn(
+		// 		thumbnailImageUrl, "[正妹]超星拳婦", "3/12",
+		// 		linebot.NewURITemplateAction("這裡放URL", "https://tw.yahoo.com/"),
+		// 	),
+		// 	linebot.NewCarouselColumn(
+		// 		thumbnailImageUrl, "[正妹]冰冰", "3/12",
+		// 		linebot.NewURITemplateAction("這裡放URL", "https://tw.yahoo.com/"),
+		// 	),
+		// )
 		if _, err := app.bot.ReplyMessage(
 			replyToken,
 			linebot.NewTemplateMessage("Carousel alt text", template),
