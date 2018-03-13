@@ -15,6 +15,7 @@ type Article struct {
 	LikeCount int
 	Link      string
 	Date      string
+	ImageLink string
 }
 
 func main() {
@@ -111,7 +112,7 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 			if index == 5 {
 				break
 			}
-			thumbnailImageUrl := "https://www.atanews.net/upload_edit/images/201605/20160524174909_79517e8e.jpg"
+			thumbnailImageUrl := result.imagelink
 			column := linebot.NewCarouselColumn(
 				thumbnailImageUrl, result.Date, result.Title,
 				linebot.NewURITemplateAction("點我查看更多", result.Link),
