@@ -112,6 +112,8 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 			if index == 5 {
 				break
 			}
+
+			log.Printf("Error is here: %v", result.Link)
 			thumbnailImageUrl := result.ImageLink
 			column := linebot.NewCarouselColumn(
 				thumbnailImageUrl, result.Date, result.Title,
