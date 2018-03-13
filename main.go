@@ -108,14 +108,11 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 		var columns []*linebot.CarouselColumn
 		iter := c.Find(bson.M{"title": bson.M{"$regex": message.Text}}).Iter()
 		var index = 0
-		var thumbnailImageUrl := "http://i.imgur.com/aQjMlmV.jpg"
 		for iter.Next(&result) {
 			if index == 5 {
 				break
 			}
-			if result.ImageLink ==""{
-				thumbnailImageUrl == result.ImageLink
-			}
+			thumbnailImageUrl := result.ImageLink
 			column := linebot.NewCarouselColumn(
 				thumbnailImageUrl, result.Date, result.Title,
 				linebot.NewURITemplateAction("點我查看更多", result.Link),
