@@ -106,26 +106,20 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 		result := Article{}
 		var columns []*linebot.CarouselColumn
 		iter := c.Find(bson.M{"title": bson.M{"$regex": message.Text}}).Iter()
+		var index = 0
 		for iter.Next(&result) {
+			if index == 5 {
+				break
+			}
 			thumbnailImageUrl := "https://www.atanews.net/upload_edit/images/201605/20160524174909_79517e8e.jpg"
 			column := linebot.NewCarouselColumn(
-				thumbnailImageUrl, result.Title, "3/12",
-				linebot.NewURITemplateAction("這裡放URL", result.Link),
+				thumbnailImageUrl, result.Date, result.Title,
+				linebot.NewURITemplateAction("點我查看更多", result.Link),
 			)
 			columns = append(columns, column)
+			index++
 		}
 		template := linebot.NewCarouselTemplate(columns...)
-		// thumbnailImageUrl := "https://www.atanews.net/upload_edit/images/201605/20160524174909_79517e8e.jpg"
-		// template := linebot.NewCarouselTemplate(
-		// 	linebot.NewCarouselColumn(
-		// 		thumbnailImageUrl, "[正妹]超星拳婦", "3/12",
-		// 		linebot.NewURITemplateAction("這裡放URL", "https://tw.yahoo.com/"),
-		// 	),
-		// 	linebot.NewCarouselColumn(
-		// 		thumbnailImageUrl, "[正妹]冰冰", "3/12",
-		// 		linebot.NewURITemplateAction("這裡放URL", "https://tw.yahoo.com/"),
-		// 	),
-		// )
 		if _, err := app.bot.ReplyMessage(
 			replyToken,
 			linebot.NewTemplateMessage("Carousel alt text", template),
