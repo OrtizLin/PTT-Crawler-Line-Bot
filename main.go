@@ -112,7 +112,7 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 			if index == 5 {
 				break
 			}
-			thumbnailImageUrl := result.imagelink
+			thumbnailImageUrl := result.ImageLink
 			column := linebot.NewCarouselColumn(
 				thumbnailImageUrl, result.Date, result.Title,
 				linebot.NewURITemplateAction("點我查看更多", result.Link),
