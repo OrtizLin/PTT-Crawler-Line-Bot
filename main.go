@@ -124,7 +124,7 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 			log.Printf("Echo message to %s: %s", replyToken, message.Text)
 			if _, err := app.bot.ReplyMessage(
 				replyToken,
-				linebot.NewTextMessage("抱歉！目前無 %s 相關文章", message.Text),
+				linebot.NewTextMessage("抱歉！目前無相關文章"),
 			).Do(); err != nil {
 				return err
 			}
