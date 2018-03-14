@@ -1,1 +1,1 @@
-web: line_bot_final
+web: line_bot_finals
