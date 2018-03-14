@@ -86,41 +86,6 @@ func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func subscribe() {
-	url := "https://notify-bot.line.me/oauth/authorize"
-    fmt.Println("URL:>", url)
-    responseType := "code"
-    clientID := "y8yBRMafJfTRcO2lGc1Nk5"
-    redirect_uri := "https://line-bot-finals.herokuapp.com/pushnotify"
-    scope := "notify"
-    state := "NO_STATE"
-
-    //json序列化
-    post := "{
-        \"response+type\":\"" + responseType +"
-        \",\"client_id\":\"" + clientID +"
-        \",\"redirect_uri\":\"" + redirect_uri +"
-        \",\"scope\":\"" + scope +"
-        \",\"state\":\"" + state +"
-        \"}"
-
-    fmt.Println(url, "post", post)
-
-    var jsonStr = []byte(post)
-    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
-    req.Header.Set("Content-Type", "application/json")
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    if err != nil {
-        panic(err)
-    }
-    defer resp.Body.Close()
-    fmt.Println("response Status:", resp.Status)
-    fmt.Println("response Headers:", resp.Header)
-    body, _ := ioutil.ReadAll(resp.Body)
-    fmt.Println("response Body:", string(body))
-}
-
 func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, source *linebot.EventSource) error {
 	switch message.Text {
 	case "tonygrr":
