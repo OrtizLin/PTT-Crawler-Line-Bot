@@ -2,16 +2,12 @@ package main
 
 import (
 	"github.com/line/line-bot-sdk-go/linebot"
-	// "github.com/utahta/go-linenotify/auth"
-	// "github.com/utahta/go-linenotify/token"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 
-	// "fmt"
 	"log"
 	"net/http"
 	"os"
-	// "time"
 )
 
 type Article struct {
@@ -33,8 +29,6 @@ func main() {
 	}
 
 	http.HandleFunc("/callback", app.Callback)
-	//http.HandleFunc("/auth", Authorize)
-	//http.HandleFunc("/pushnotify", PushNotify)
 	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
 		log.Fatal(err)
 	}
@@ -63,46 +57,6 @@ func NewLineBot(channelSecret, channelToken, appBaseURL string) (*LineBot, error
 		downloadDir: "test",
 	}, nil
 }
-
-//func auth for line notify
-// func Authorize(w http.ResponseWriter, req *http.Request) {
-// 	c, err := auth.New(os.Getenv("ClientID"), os.Getenv("APP_BASE_URL")+"pushnotify")
-// 	if err != nil {
-// 		fmt.Fprintf(w, "error:%v", err)
-// 		return
-// 	}
-// 	http.SetCookie(w, &http.Cookie{Name: "state", Value: c.State, Expires: time.Now().Add(60 * time.Second)})
-
-// 	c.Redirect(w, req)
-// }
-
-//auth notify token call back
-// func PushNotify(w http.ResponseWriter, req *http.Request) {
-// 	resp, err := auth.ParseRequest(req)
-// 	if err != nil {
-// 		fmt.Fprintf(w, "error:%v", err)
-// 		return
-// 	}
-// 	state, err := req.Cookie("state")
-// 	if err != nil {
-// 		fmt.Fprintf(w, "error:%v", err)
-// 		return
-// 	}
-// 	if resp.State != state.Value {
-// 		fmt.Fprintf(w, "error:%v", err)
-// 		return
-// 	}
-
-// 	c := token.New(os.Getenv("APP_BASE_URL")+"pushnotify", os.Getenv("ClientID"), os.Getenv("ClientSecret"))
-// 	accessToken, err := c.GetAccessToken(resp.Code)
-// 	if err != nil {
-// 		fmt.Fprintf(w, "error:%v", err)
-// 		return
-// 	}
-
-// 	fmt.Fprintf(w, "token:%v", accessToken)
-// }
-
 func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
 	events, err := app.bot.ParseRequest(r)
 
@@ -124,7 +78,7 @@ func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
 					log.Print(err)
 				}
 			default:
-				log.Printf("Unknown messages: %v", message)
+				log.Printf("Unknown message: %v", message)
 			}
 		default:
 			log.Printf("Unknown event: %v", event)
