@@ -78,7 +78,7 @@ func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
 					log.Print(err)
 				}
 			default:
-				log.Printf("Unknown message: %v", message)
+				log.Printf("Unknown messages: %v", message)
 			}
 		default:
 			log.Printf("Unknown event: %v", event)
