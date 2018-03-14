@@ -2,16 +2,16 @@ package main
 
 import (
 	"github.com/line/line-bot-sdk-go/linebot"
-	"github.com/utahta/go-linenotify/auth"
-	"github.com/utahta/go-linenotify/token"
+	// "github.com/utahta/go-linenotify/auth"
+	// "github.com/utahta/go-linenotify/token"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 
-	"fmt"
+	// "fmt"
 	"log"
 	"net/http"
 	"os"
-	"time"
+	// "time"
 )
 
 type Article struct {
