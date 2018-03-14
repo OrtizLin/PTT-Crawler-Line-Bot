@@ -33,8 +33,8 @@ func main() {
 	}
 
 	http.HandleFunc("/callback", app.Callback)
-	http.HandleFunc("/auth", Authorize)
-	http.HandleFunc("/pushnotify", PushNotify)
+	//http.HandleFunc("/auth", Authorize)
+	//http.HandleFunc("/pushnotify", PushNotify)
 	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
 		log.Fatal(err)
 	}
