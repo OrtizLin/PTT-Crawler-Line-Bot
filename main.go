@@ -107,6 +107,7 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 
 	default:
 
+		log.Printf("收到: %s 訊息", message.Text)
 		session, errs := mgo.Dial(os.Getenv("DBURL"))
 		if errs != nil {
 			panic(errs)
