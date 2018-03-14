@@ -118,7 +118,7 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 		iter := c.Find(bson.M{"title": bson.M{"$regex": message.Text}}).Iter()
 		var index = 0
 		for iter.Next(&result) {
-			if index == 5 {
+			if index == 10 { //array of columns, max:10
 				break
 			}
 			thumbnailImageUrl := result.ImageLink
