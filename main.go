@@ -117,7 +117,7 @@ func Token(w http.ResponseWriter, req *http.Request) {
 	} else {
 		fmt.Println("Insert successful push some message in line notify.")
 		connect := linenotify.New()
-		c.Notify(token, "恭喜您已與表特爆報連動,若表特版有精彩文章會立即通知您", "", "https://image.famitsu.hk/201712/47dec32c774c3fd60deb142192fcee93_m.jpg", nil)
+		connect.Notify(token, "恭喜您已與表特爆報連動,若表特版有精彩文章會立即通知您", "", "https://image.famitsu.hk/201712/47dec32c774c3fd60deb142192fcee93_m.jpg", nil)
 	}
 	fmt.Fprintf(w, "LINE Notify 連動完成。\n 您將可以不定期收到 [PTT 表特版] 爆文通知。")
 }
