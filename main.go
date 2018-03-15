@@ -108,10 +108,10 @@ func Token(w http.ResponseWriter, req *http.Request) {
 		panic(errs)
 	}
 	defer session.Close()
-	c := session.DB("xtest").C("tokendb")
+	collect := session.DB("xtest").C("tokendb")
 	user := User{}
 	user.UserToken = accessToken
-	errs = c.Insert(&User{user.UserToken})
+	errs = collect.Insert(&User{user.UserToken})
 	if errs != nil {
 		log.Fatal(errs)
 	} else {
