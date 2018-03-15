@@ -22,6 +22,10 @@ type Article struct {
 	ImageLink string
 }
 
+type User struct {
+	UserToken string
+}
+
 func main() {
 	app, err := NewLineBot(
 		os.Getenv("ChannelSecret"),
@@ -99,8 +103,21 @@ func Token(w http.ResponseWriter, req *http.Request) {
 		fmt.Fprintf(w, "error:%v", err)
 		return
 	}
-
-	fmt.Fprintf(w, "token:%v", accessToken)
+	session, errs := mgo.Dial(os.Getenv("DBURL"))
+	if errs != nil {
+		panic(errs)
+	}
+	defer session.Close()
+	c := session.DB("xtest").C("tokendb")
+	user := User{}
+	user.UserToken = accessToken
+	errs = c.Insert(&User{user.UserToken})
+	if errs != nil {
+		log.Fatal(errs)
+	} else {
+		fmt.Println("Insert successful push some message in line notify.")
+	}
+	fmt.Fprintf(w, "LINE Notify 連動完成。\n 您將可以不定期收到PTT表特版爆文通知。")
 }
 func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
 	events, err := app.bot.ParseRequest(r)
@@ -141,15 +158,6 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 		).Do(); err != nil {
 			return err
 		}
-	case "訂閱通知":
-		log.Printf("Echo message to %s: %s", replyToken, message.Text)
-		if _, err := app.bot.ReplyMessage(
-			replyToken,
-			linebot.NewTextMessage("功能尚未完成,敬請期待:)"),
-		).Do(); err != nil {
-			return err
-		}
-
 	default:
 
 		session, errs := mgo.Dial(os.Getenv("DBURL"))
