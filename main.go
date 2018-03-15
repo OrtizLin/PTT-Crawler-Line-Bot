@@ -142,7 +142,6 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 			return err
 		}
 	case "訂閱通知":
-		subscribe()
 		log.Printf("Echo message to %s: %s", replyToken, message.Text)
 		if _, err := app.bot.ReplyMessage(
 			replyToken,
