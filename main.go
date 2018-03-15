@@ -117,9 +117,10 @@ func Token(w http.ResponseWriter, req *http.Request) {
 		log.Fatal(errs)
 	} else {
 		fmt.Println("Insert successful push some message in line notify.")
-		connect := linenotify.New()
-		connect.Notify(user.UserToken, "恭喜您已與表特爆報連動,若表特版有精彩文章會立即通知您", "", "https://image.famitsu.hk/201712/47dec32c774c3fd60deb142192fcee93_m.jpg", nil)
 	}
+	connect := linenotify.New()
+	connect.Notify(user.UserToken, "恭喜您已與表特爆報連動,若表特版有精彩文章會立即通知您", "", "https://image.famitsu.hk/201712/47dec32c774c3fd60deb142192fcee93_m.jpg", nil)
+
 	fmt.Fprintf(w, "LINE Notify 連動完成。\n 您將可以不定期收到 [PTT 表特版] 爆文通知。")
 }
 func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
