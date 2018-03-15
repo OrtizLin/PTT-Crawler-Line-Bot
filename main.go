@@ -36,6 +36,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	http.HandleFunc("/wakeup", WakeUp)
 	http.HandleFunc("/auth", Authorize)
 	http.HandleFunc("/pushnotify", Token)
 	http.HandleFunc("/callback", app.Callback)
@@ -66,6 +67,11 @@ func NewLineBot(channelSecret, channelToken, appBaseURL string) (*LineBot, error
 		appBaseURL:  appBaseURL,
 		downloadDir: "test",
 	}, nil
+}
+
+//wake up heroku server
+func WakeUp(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "Hello World")
 }
 
 //auth func for line notify
