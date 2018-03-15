@@ -27,6 +27,18 @@
 			"revisionTime": "2017-11-23T12:45:08Z"
 		},
 		{
+			"checksumSHA1": "SXDrkG8b5/dOMKAe9H7iEPWwj5k=",
+			"path": "github.com/utahta/go-linenotify/auth",
+			"revision": "1f9c5d4f257800db7c9f02f94dcd319963e313ec",
+			"revisionTime": "2017-11-23T12:45:08Z"
+		},
+		{
+			"checksumSHA1": "YFaq5cca0Yuuiygi1SinKbokFJs=",
+			"path": "github.com/utahta/go-linenotify/token",
+			"revision": "1f9c5d4f257800db7c9f02f94dcd319963e313ec",
+			"revisionTime": "2017-11-23T12:45:08Z"
+		},
+		{
 			"checksumSHA1": "1D8GzeoFGUs5FZOoyC2DpQg8c5Y=",
 			"path": "gopkg.in/mgo.v2",
 			"revision": "3f83fa5005286a7fe593b055f0d7771a7dce4655",
