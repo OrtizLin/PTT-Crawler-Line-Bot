@@ -2,6 +2,8 @@
 
 ![螢幕快照](https://i.imgur.com/r4XiMa0.png)
 
+歡迎加 表特爆報 為好友！
+
 Line Bot 表特爆報 , 使用者可以利用關鍵字搜尋當日 PTT 表特版發文, 或使用圖文按鈕直接搜尋, 若當日有推文數>99, 亦即推爆的文章, 將會利用Line Notify 發送通知給有訂閱之使用者。
 
 
@@ -25,3 +27,8 @@ for iter.Next(&result) {
 
 
 
+# 其它
+
+若有任何問題或功能需求歡迎來信討論
+
+otis@openalign.com
