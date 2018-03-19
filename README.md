@@ -29,6 +29,8 @@ for iter.Next(&result) {
 
 # 其它
 
+示範影片連結：https://youtu.be/C9F6JESudyI
+
 若有任何問題或功能需求歡迎來信討論
 
 otis@openalign.com
