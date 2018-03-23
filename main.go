@@ -36,6 +36,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	http.HandleFunc("/wakeup", WakeUp)
 	http.HandleFunc("/auth", Authorize)
 	http.HandleFunc("/pushnotify", Token)
