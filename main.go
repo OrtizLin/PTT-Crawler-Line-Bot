@@ -94,6 +94,7 @@ func Token(w http.ResponseWriter, req *http.Request) {
 		fmt.Fprintf(w, "error:%v", err)
 		return
 	}
+
 	state, err := req.Cookie("state")
 	if err != nil {
 		fmt.Fprintf(w, "error:%v", err)
@@ -125,6 +126,7 @@ func Token(w http.ResponseWriter, req *http.Request) {
 		connect := linenotify.New()
 		connect.NotifyWithImageURL(user.UserToken, "恭喜您已與表特爆報連動 , 若表特版有精彩文章將會立即通知您。", "https://image.famitsu.hk/201712/47dec32c774c3fd60deb142192fcee93_m.jpg", "https://image.famitsu.hk/201712/47dec32c774c3fd60deb142192fcee93_m.jpg")
 	}
+
 	fmt.Fprintf(w, "LINE Notify 連動完成。\n 您將可以不定期收到 [PTT 表特版] 爆文通知。")
 }
 func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
@@ -150,6 +152,15 @@ func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
 			default:
 				log.Printf("Unknown message: %v", message)
 			}
+		case linebot.EventTypeJoin:
+			res, err := app.bot.GetUserProfile(event.Source.UserID).Do()
+			if err != nil {
+
+			}
+			fmt.Printf(res.Displayname)
+			fmt.Printf(res.PictureUrl)
+			fmt.Printf(res.StatusMessage)
+
 		default:
 			log.Printf("Unknown event: %v", event)
 		}
