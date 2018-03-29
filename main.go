@@ -94,7 +94,6 @@ func Token(w http.ResponseWriter, req *http.Request) {
 		fmt.Fprintf(w, "error:%v", err)
 		return
 	}
-
 	state, err := req.Cookie("state")
 	if err != nil {
 		fmt.Fprintf(w, "error:%v", err)
@@ -126,7 +125,7 @@ func Token(w http.ResponseWriter, req *http.Request) {
 		connect := linenotify.New()
 		connect.NotifyWithImageURL(user.UserToken, "恭喜您已與表特爆報連動 , 若表特版有精彩文章將會立即通知您。", "https://image.famitsu.hk/201712/47dec32c774c3fd60deb142192fcee93_m.jpg", "https://image.famitsu.hk/201712/47dec32c774c3fd60deb142192fcee93_m.jpg")
 	}
-
+	fmt.Fprint(w, resp)
 	fmt.Fprintf(w, "LINE Notify 連動完成。\n 您將可以不定期收到 [PTT 表特版] 爆文通知。")
 }
 func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
