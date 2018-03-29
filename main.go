@@ -153,13 +153,8 @@ func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
 				log.Printf("Unknown message: %v", message)
 			}
 		case linebot.EventTypeJoin:
-			res, err := app.GetUserProfile(event.Source.UserID).Do()
-			if err != nil {
 
-			}
-			fmt.Printf(res.Displayname)
-			fmt.Printf(res.PictureUrl)
-			fmt.Printf(res.StatusMessage)
+			fmt.Printf(event.Source.UserID)
 
 		default:
 			log.Printf("Unknown event: %v", event)
