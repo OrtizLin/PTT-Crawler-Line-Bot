@@ -152,10 +152,6 @@ func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
 			default:
 				log.Printf("Unknown message: %v", message)
 			}
-		case linebot.EventTypeFollow:
-
-			fmt.Printf(event.Source.UserID)
-
 		default:
 			log.Printf("Unknown event: %v", event)
 		}
