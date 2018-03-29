@@ -153,7 +153,7 @@ func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
 				log.Printf("Unknown message: %v", message)
 			}
 		case linebot.EventTypeJoin:
-			res, err := app.bot.GetUserProfile(event.Source.UserID).Do()
+			res, err := message.GetUserProfile(event.Source.UserID).Do()
 			if err != nil {
 
 			}
