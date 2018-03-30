@@ -153,8 +153,7 @@ func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
 				log.Printf("Unknown message: %v", message)
 			}
 		case linebot.EventTypeFollow:
-			messages := event.Message.(type)
-			if err := app.newFollow(messages, event.ReplyToken, event.Source); err != nil {
+			if err := app.newFollow(event.ReplyToken, event.Source); err != nil {
 				log.Print(err)
 			}
 		default:
@@ -162,7 +161,7 @@ func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 }
-func (app *LineBot) newFollow(message *linebot.TextMessage, replyToken string, source *linebot.EventSource) error {
+func (app *LineBot) newFollow(replyToken string, source *linebot.EventSource) error {
 	res, err := app.bot.GetUserProfile(source.UserID).Do()
 	if err != nil {
 		log.Print(err)
