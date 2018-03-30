@@ -152,12 +152,25 @@ func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
 			default:
 				log.Printf("Unknown message: %v", message)
 			}
+		case linebot.EventTypeFollow:
+			if err := app.newFollow(message, event.ReplyToken, event.Source); err != nil {
+				log.Print(err)
+			}
 		default:
 			log.Printf("Unknown event: %v", event)
 		}
 	}
 }
+func (app *LineBot) newFollow(message *linebot.TextMessage, replyToken string, source *linebot.EventSource) error {
+	res, err := app.bot.GetUserProfile(source.UserID).Do()
+	if err != nil {
+		log.Print(err)
+	}
+	log.println(res.Displayname)
+	log.println(res.PicutureURL)
+	log.println(res.StatusMessage)
 
+}
 func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, source *linebot.EventSource) error {
 	switch message.Text {
 	case "tonygrr":
