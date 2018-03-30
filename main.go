@@ -157,10 +157,11 @@ func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				log.Print(err)
 			}
-
-			log.Printf("display name: %s", profile.DisplayName)
-			log.Printf("picture url: %s", profile.PictureURL)
-			log.Printf("status message: %s", profile.StatusMessage)
+			//send notify to myself when someone follow this robot.
+			token := os.Getenv("OtisToken")
+			c := linenotify.New()
+			content := profile.DisplayName + "追蹤了表特爆報 ！"
+			c.NotifyWithImageURL(token, content, profile.PictureURL, profile.PictureURL)
 
 		default:
 			log.Printf("Unknown event: %v", event)
