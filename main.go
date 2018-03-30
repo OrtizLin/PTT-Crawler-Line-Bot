@@ -152,6 +152,16 @@ func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
 			default:
 				log.Printf("Unknown message: %v", message)
 			}
+		case linebot.EventTypeFollow:
+			profile, err := app.bot.GetProfile(source.UserID).Do()
+			if err != nil {
+				log.Print(err)
+			}
+
+			log.Printf("display name: %s", profile.DisplayName)
+			log.Printf("picture url: %s", profile.PictureURL)
+			log.Printf("status message: %s", profile.StatusMessage)
+
 		default:
 			log.Printf("Unknown event: %v", event)
 		}
@@ -166,23 +176,6 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 			linebot.NewTextMessage("http://www.jav777.cc/"),
 		).Do(); err != nil {
 			return err
-		}
-	case "profile":
-		if source.UserID != "" {
-			profile, err := app.bot.GetProfile(source.UserID).Do()
-			if err != nil {
-				return err
-			}
-			if _, err := app.bot.ReplyMessage(
-				replyToken,
-				linebot.NewTextMessage("Display name: "+profile.DisplayName),
-				linebot.NewTextMessage("Display name: "+profile.PictureURL),
-				linebot.NewTextMessage("Status message: "+profile.StatusMessage),
-			).Do(); err != nil {
-				return err
-			}
-		} else {
-			return nil
 		}
 	default:
 
