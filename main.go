@@ -152,10 +152,6 @@ func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
 			default:
 				log.Printf("Unknown message: %v", message)
 			}
-		case linebot.EventTypeFollow:
-			if err := app.handleText(message, event.ReplyToken, event.Source); err != nil {
-				log.Print(err)
-			}
 		default:
 			log.Printf("Unknown event: %v", event)
 		}
@@ -180,7 +176,6 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 			if _, err := app.bot.ReplyMessage(
 				replyToken,
 				linebot.NewTextMessage("Display name: "+profile.DisplayName),
-				linebot.NewTextMessage("Display name: "+profile.PicutureURL),
 				linebot.NewTextMessage("Status message: "+profile.StatusMessage),
 			).Do(); err != nil {
 				return err
