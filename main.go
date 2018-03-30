@@ -153,23 +153,13 @@ func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
 				log.Printf("Unknown message: %v", message)
 			}
 		case linebot.EventTypeFollow:
-			if err := app.newFollow(event.ReplyToken, event.Source); err != nil {
+			if err := app.handleText(message, event.ReplyToken, event.Source); err != nil {
 				log.Print(err)
 			}
 		default:
 			log.Printf("Unknown event: %v", event)
 		}
 	}
-}
-func (app *LineBot) newFollow(replyToken string, source *linebot.EventSource) error {
-	res, err := app.bot.GetUserProfiles(source.UserID).Do()
-	if err != nil {
-		return err
-	}
-	log.Print(res.Displayname)
-	log.Print(res.PicutureURL)
-	log.Print(res.StatusMessage)
-	return nil
 }
 func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, source *linebot.EventSource) error {
 	switch message.Text {
@@ -180,6 +170,23 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 			linebot.NewTextMessage("http://www.jav777.cc/"),
 		).Do(); err != nil {
 			return err
+		}
+	case "profile":
+		if source.UserID != "" {
+			profile, err := app.bot.GetProfile(source.UserID).Do()
+			if err != nil {
+				return app.replyText(replyToken, err.Error())
+			}
+			if _, err := app.bot.ReplyMessage(
+				replyToken,
+				linebot.NewTextMessage("Display name: "+profile.DisplayName),
+				linebot.NewTextMessage("Display name: "+profile.PicutureURL),
+				linebot.NewTextMessage("Status message: "+profile.StatusMessage),
+			).Do(); err != nil {
+				return err
+			}
+		} else {
+			return app.replyText(replyToken, "Bot can't use profile API without user ID")
 		}
 	default:
 
