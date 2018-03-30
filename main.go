@@ -176,6 +176,7 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 			if _, err := app.bot.ReplyMessage(
 				replyToken,
 				linebot.NewTextMessage("Display name: "+profile.DisplayName),
+				linebot.NewTextMessage("Display name: "+profile.PictureURL),
 				linebot.NewTextMessage("Status message: "+profile.StatusMessage),
 			).Do(); err != nil {
 				return err
