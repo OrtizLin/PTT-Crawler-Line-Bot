@@ -164,12 +164,12 @@ func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
 func (app *LineBot) newFollow(replyToken string, source *linebot.EventSource) error {
 	res, err := app.bot.GetUserProfile(source.UserID).Do()
 	if err != nil {
-		log.Print(err)
+		return err
 	}
 	log.Print(res.Displayname)
 	log.Print(res.PicutureURL)
 	log.Print(res.StatusMessage)
-
+	return nil
 }
 func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, source *linebot.EventSource) error {
 	switch message.Text {
