@@ -162,7 +162,7 @@ func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
 	}
 }
 func (app *LineBot) newFollow(replyToken string, source *linebot.EventSource) error {
-	res, err := linebot.GetUserProfile(source.UserID).Do()
+	res, err := app.bot.GetUserProfiles(source.UserID).Do()
 	if err != nil {
 		return err
 	}
