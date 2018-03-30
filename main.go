@@ -171,7 +171,7 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 		if source.UserID != "" {
 			profile, err := app.bot.GetProfile(source.UserID).Do()
 			if err != nil {
-				return app.NewTextMessage(err.Error())
+				return err
 			}
 			if _, err := app.bot.ReplyMessage(
 				replyToken,
@@ -181,7 +181,7 @@ func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, 
 				return err
 			}
 		} else {
-			return app.NewTextMessage("Bot can't use profile API without user ID")
+			return nil
 		}
 	default:
 
