@@ -89,8 +89,13 @@ func SearchArticle(message string) (article []Article) {
 	c := session.DB("xtest").C("xtest")
 	result := Article{}
 	iter := c.Find(bson.M{"title": bson.M{"$regex": message}}).Iter()
+	count := 0
 	for iter.Next(&result) {
+		if count == 9 {
+			break
+		}
 		articles = append(articles, result)
+		count++
 	}
 	return articles
 }

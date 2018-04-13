@@ -85,19 +85,15 @@ func (app *LineBotStruct) handleText(message *linebot.TextMessage, replyToken st
 				return err
 			}
 		} else {
-			count := 0
 			var columns []*linebot.CarouselColumn
 			for i := 0; i < len(result); i++ {
-				if count == 9 {
-					break
-				}
 				thumbnailImageUrl := result[i].ImageLink
 				column := linebot.NewCarouselColumn(
 					thumbnailImageUrl, result[i].Date, result[i].Title,
 					linebot.NewURITemplateAction("點我查看更多", result[i].Link),
 				)
 				columns = append(columns, column)
-				count++
+
 			}
 
 			template := linebot.NewCarouselTemplate(columns...)
