@@ -22,12 +22,11 @@ type Article struct {
 }
 
 func Start(w http.ResponseWriter, r *http.Request) {
+	db.RemoveALL()
 	getAllArticles()
 }
 
 func getAllArticles() {
-
-	db.RemoveALL()
 
 	var BOOL = true
 	var exist = true

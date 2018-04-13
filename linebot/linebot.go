@@ -86,8 +86,6 @@ func (app *LineBotStruct) handleText(message *linebot.TextMessage, replyToken st
 			for i := 0; i < len(result); i++ {
 
 				thumbnailImageUrl := result[i].ImageLink
-				log.Println(thumbnailImageUrl)
-
 				column := linebot.NewCarouselColumn(
 					thumbnailImageUrl, result[i].Date, result[i].Title,
 					linebot.NewURITemplateAction("點我查看更多", result[i].Link),
