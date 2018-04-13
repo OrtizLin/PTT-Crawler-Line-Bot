@@ -92,6 +92,10 @@ func SearchArticle(message string) (article []Article) {
 	for iter.Next(&result) {
 		articles = append(articles, result)
 	}
+	for i := 0; i < len(articles); i++ {
+		log.Println(articles[i].Title)
+		log.Println(articles[i].ImageLink)
+	}
 	return articles
 }
 
