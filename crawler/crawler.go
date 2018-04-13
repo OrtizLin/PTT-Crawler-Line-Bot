@@ -38,6 +38,8 @@ func countUpdater() {
 
 func getAllArticles() {
 
+	db.RemoveALL()
+
 	var BOOL = true
 	var exist = true
 	var url string = ""  //default url
