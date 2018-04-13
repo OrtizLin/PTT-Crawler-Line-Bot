@@ -1,15 +1,11 @@
 package db
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/utahta/go-linenotify"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"log"
-	"net/http"
 	"os"
-	"strconv"
 )
 
 type User struct {
@@ -17,11 +13,12 @@ type User struct {
 }
 
 type Article struct {
-	Title     string
-	LikeCount int
-	Link      string
-	Date      string
-	ImageLink string
+	Title           string
+	LikeCount       int
+	Link            string
+	Date            string
+	ImageLink       string
+	LikeCountString string
 }
 
 func SaveToken(token string) bool {
@@ -61,7 +58,7 @@ func InsertArticle(title, likeCount, link, date, imageLink, likeCountString stri
 	} else {
 		if likeCountString == "爆" {
 			result := Article{}
-			err := c2.Find(bson.M{"link": link}).One(&result_two) //check if article already send
+			err := c2.Find(bson.M{"link": link}).One(&result) //check if article already send
 			if err != nil {
 				err3 := c2.Insert(&Article{title, likeCount, link, date, imageLink, likeCountString})
 				if err3 != nil {
@@ -91,7 +88,7 @@ func SearchArticle(message string) (article []Article) {
 	defer session.Close()
 	c := session.DB("xtest").C("xtest")
 	result := Article{}
-	iter := c2.Find(bson.M{"title": bson.M{"$regex": message}}).Iter()
+	iter := c.Find(bson.M{"title": bson.M{"$regex": message}}).Iter()
 	for iter.Next(&result) {
 		articles = append(articles, result)
 	}
