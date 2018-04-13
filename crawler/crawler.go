@@ -21,19 +21,8 @@ type Article struct {
 	LikeCountString string
 }
 
-var count uint64
-
 func Start(w http.ResponseWriter, r *http.Request) {
-	go countUpdater()
-}
-
-func countUpdater() {
-
-	for {
-		getAllArticles()
-		count++
-		time.Sleep(600 * time.Second)
-	}
+	getAllArticles()
 }
 
 func getAllArticles() {

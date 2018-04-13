@@ -90,7 +90,7 @@ func (app *LineBotStruct) handleText(message *linebot.TextMessage, replyToken st
 			}
 
 			var columns []*linebot.CarouselColumn
-			for i := 0; i < a-1; i++ {
+			for i := 0; i < a; i++ {
 
 				thumbnailImageUrl := result[i].ImageLink
 				column := linebot.NewCarouselColumn(
