@@ -2,7 +2,9 @@ package linebot
 
 import (
 	"github.com/line/line-bot-sdk-go/linebot"
+	"line_bot_final/db"
 	"line_bot_final/linenotify"
+	"log"
 	"net/http"
 )
 
@@ -89,6 +91,8 @@ func (app *LineBotStruct) handleText(message *linebot.TextMessage, replyToken st
 
 			var columns []*linebot.CarouselColumn
 			for i := 0; i < a-1; i++ {
+
+				thumbnailImageUrl := result[i].ImageLink
 				column := linebot.NewCarouselColumn(
 					thumbnailImageUrl, result[i].Date, result[i].Title,
 					linebot.NewURITemplateAction("點我查看更多", result[i].Link),
