@@ -95,7 +95,7 @@ func getAllArticles() {
 				doc.Find("#main-content > a").EachWithBreak(func(i int, s *goquery.Selection) bool {
 					imgLink := s.Text()
 					if strings.Contains(imgLink, ".jpg") {
-						if strings.Contains(imgLink, "https") {
+						if strings.Contains(imgLink, "https") || strings.Contains(imgLink, "http") {
 							article.ImageLink = imgLink
 							return false
 						}
