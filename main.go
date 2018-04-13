@@ -4,6 +4,7 @@ import (
 	"line_bot_final/crawler"
 	"line_bot_final/linebot"
 	"line_bot_final/linenotify"
+	"log"
 	"net/http"
 	"os"
 )
