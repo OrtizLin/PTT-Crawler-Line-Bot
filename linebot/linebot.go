@@ -82,7 +82,11 @@ func (app *LineBotStruct) handleText(message *linebot.TextMessage, replyToken st
 				return err
 			}
 		} else {
-			log.Printf(result)
+			for i:=0 i<len(result);i++{
+
+			log.Printf(result[i].Title)
+			log.Printf(result[i].ImageLink)	
+		}
 			// a := 0
 			// if len(result) < 10 {
 			// 	a = len(result)
