@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"line_bot_final/crawler"
 	"line_bot_final/linebot"
 	"line_bot_final/linenotify"
@@ -10,7 +9,7 @@ import (
 )
 
 func main() {
-	app, err := NewLineBot(
+	app, err := linebot.NewLineBot(
 		os.Getenv("ChannelSecret"),
 		os.Getenv("ChannelAccessToken"),
 		os.Getenv("APP_BASE_URL"),
