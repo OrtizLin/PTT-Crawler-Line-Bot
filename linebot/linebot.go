@@ -82,31 +82,32 @@ func (app *LineBotStruct) handleText(message *linebot.TextMessage, replyToken st
 				return err
 			}
 		} else {
-			a := 0
-			if len(result) < 10 {
-				a = len(result)
-			} else {
-				a = 10 //array of columns, max:10
-			}
+			log.Printf(result)
+			// a := 0
+			// if len(result) < 10 {
+			// 	a = len(result)
+			// } else {
+			// 	a = 10 //array of columns, max:10
+			// }
 
-			var columns []*linebot.CarouselColumn
-			for i := 0; i < a; i++ {
+			// var columns []*linebot.CarouselColumn
+			// for i := 0; i < a; i++ {
 
-				thumbnailImageUrl := result[i].ImageLink
-				column := linebot.NewCarouselColumn(
-					thumbnailImageUrl, result[i].Date, result[i].Title,
-					linebot.NewURITemplateAction("點我查看更多", result[i].Link),
-				)
-				columns = append(columns, column)
-			}
+			// 	thumbnailImageUrl := result[i].ImageLink
+			// 	column := linebot.NewCarouselColumn(
+			// 		thumbnailImageUrl, result[i].Date, result[i].Title,
+			// 		linebot.NewURITemplateAction("點我查看更多", result[i].Link),
+			// 	)
+			// 	columns = append(columns, column)
+			// }
 
-			template := linebot.NewCarouselTemplate(columns...)
-			if _, err := app.bot.ReplyMessage(
-				replyToken,
-				linebot.NewTemplateMessage("正妹來囉！", template),
-			).Do(); err != nil {
-				return err
-			}
+			// template := linebot.NewCarouselTemplate(columns...)
+			// if _, err := app.bot.ReplyMessage(
+			// 	replyToken,
+			// 	linebot.NewTemplateMessage("正妹來囉！", template),
+			// ).Do(); err != nil {
+			// 	return err
+			// }
 		}
 	}
 	return nil
