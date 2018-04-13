@@ -72,7 +72,10 @@ func (app *LineBotStruct) handleText(message *linebot.TextMessage, replyToken st
 	default:
 
 		result := db.SearchArticle(message.Text)
-
+		for i := 0; i < len(result); i++ {
+			log.Println(result[i].Title)
+			log.Println(result[i].ImageLink)
+		}
 		if len(result) == 0 {
 			log.Printf("Echo message to %s: %s", replyToken, message.Text)
 			if _, err := app.bot.ReplyMessage(
