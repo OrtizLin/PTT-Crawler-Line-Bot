@@ -43,7 +43,7 @@ func SaveToken(token string) bool {
 
 }
 
-func InsertArticle(title, likeCount, link, date, imageLink, likeCountString string) {
+func InsertArticle(title string, likeCount int, link string, date string, imageLink string, likeCountString string) {
 	session, errs := mgo.Dial(os.Getenv("DBURL"))
 	if errs != nil {
 		panic(errs)

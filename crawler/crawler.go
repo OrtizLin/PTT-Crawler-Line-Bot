@@ -48,10 +48,6 @@ func getAllArticles() {
 	//today's date
 	loc, _ := time.LoadLocation("Asia/Chongqing")
 	time := time.Now().In(loc)
-	fmt.Println(time.Format("2006-01-02 15:04:05"))
-
-	c2 := session.DB("xtest").C("tokendb")
-	c3 := session.DB("xtest").C("alreadysent")
 
 	for BOOL {
 		if href == "" {
