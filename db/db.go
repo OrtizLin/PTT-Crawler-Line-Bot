@@ -91,7 +91,7 @@ func SearchArticle(message string) (article []Article) {
 	iter := c.Find(bson.M{"title": bson.M{"$regex": message}}).Iter()
 	count := 0
 	for iter.Next(&result) {
-		if count == 9 {
+		if count == 10 {
 			break
 		}
 		articles = append(articles, result)
