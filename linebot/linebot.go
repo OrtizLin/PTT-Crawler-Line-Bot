@@ -71,6 +71,8 @@ func (app *LineBotStruct) handleText(message *linebot.TextMessage, replyToken st
 		}
 	default:
 
+		result := db.SearchArticle(message.Text)
+
 		if len(result) == 0 {
 			log.Printf("Echo message to %s: %s", replyToken, message.Text)
 			if _, err := app.bot.ReplyMessage(
@@ -85,6 +87,7 @@ func (app *LineBotStruct) handleText(message *linebot.TextMessage, replyToken st
 
 				thumbnailImageUrl := result[i].ImageLink
 				log.Println(thumbnailImageUrl)
+
 				column := linebot.NewCarouselColumn(
 					thumbnailImageUrl, result[i].Date, result[i].Title,
 					linebot.NewURITemplateAction("點我查看更多", result[i].Link),
