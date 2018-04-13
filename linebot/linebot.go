@@ -3,6 +3,7 @@ package linebot
 import (
 	"github.com/line/line-bot-sdk-go/linebot"
 	"line_bot_final/linenotify"
+	"net/http"
 )
 
 type LineBotStruct struct {
@@ -26,7 +27,7 @@ func NewLineBot(channelSecret, channelToken, appBaseURL string) (*LineBotStruct,
 	}, nil
 }
 
-func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
+func (app *LineBotStruct) Callback(w http.ResponseWriter, r *http.Request) {
 	events, err := app.bot.ParseRequest(r)
 
 	if err != nil {
@@ -57,7 +58,7 @@ func (app *LineBot) Callback(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 }
-func (app *LineBot) handleText(message *linebot.TextMessage, replyToken string, source *linebot.EventSource) error {
+func (app *LineBotStruct) handleText(message *linebot.TextMessage, replyToken string, source *linebot.EventSource) error {
 	switch message.Text {
 	case "tonygrr":
 		if _, err := app.bot.ReplyMessage(

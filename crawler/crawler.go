@@ -1,7 +1,6 @@
 package cralwer
 
 import (
-	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"line_bot_final/db"
 	"log"
