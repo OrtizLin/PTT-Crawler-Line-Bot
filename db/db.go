@@ -6,7 +6,6 @@ import (
 	"gopkg.in/mgo.v2/bson"
 	"log"
 	"os"
-	"strings"
 )
 
 type User struct {
