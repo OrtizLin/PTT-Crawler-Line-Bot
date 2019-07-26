@@ -23,10 +23,10 @@ type Article struct {
 
 func Start(w http.ResponseWriter, r *http.Request) {
 	db.RemoveALL()
-	getAllArticles()
+	getAllArticles("Beauty")
 }
 
-func getAllArticles() {
+func getAllArticles(fourm string) {
 
 	var BOOL = true
 	var exist = true
@@ -40,7 +40,7 @@ func getAllArticles() {
 
 	for BOOL {
 		if href == "" {
-			url = BasePttAddress + "/bbs/Beauty/index.html"
+			url = BasePttAddress + "/bbs/" + fourm + "/index.html"
 		} else {
 			url = BasePttAddress + href
 		}
@@ -109,4 +109,6 @@ func getAllArticles() {
 		})
 		crawlerCount = crawlerCount + 1
 	}
+	// 爬完表特爬西斯
+	getAllArticles("Sex")
 }
