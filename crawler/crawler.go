@@ -33,7 +33,7 @@ func getAllArticles(fourm string) {
 	var exist = true
 	var url string = ""  //default url
 	var href string = "" //next page url
-	crawlerCount := 0
+	var crawlerCount = 0
 
 	//today's date
 	loc, _ := time.LoadLocation("Asia/Chongqing")
