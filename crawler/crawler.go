@@ -24,6 +24,7 @@ type Article struct {
 func Start(w http.ResponseWriter, r *http.Request) {
 	db.RemoveALL()
 	getAllArticles("Beauty")
+	getAllArticles("Sex")
 }
 
 func getAllArticles(fourm string) {
@@ -109,6 +110,4 @@ func getAllArticles(fourm string) {
 		})
 		crawlerCount = crawlerCount + 1
 	}
-	// 爬完表特爬西斯
-	getAllArticles("Sex")
 }
