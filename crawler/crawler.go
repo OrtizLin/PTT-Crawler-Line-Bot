@@ -26,14 +26,6 @@ func Start(w http.ResponseWriter, r *http.Request) {
 	getAllArticles()
 }
 
-func over18() {
-	cookie := http.Cookie{
-		Name: "over18"
-		Value: "1",
-	}
-
-}
-
 func getAllArticles() {
 
 	var BOOL = true
