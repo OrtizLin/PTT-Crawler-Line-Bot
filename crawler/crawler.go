@@ -52,7 +52,7 @@ func getAllArticles() {
 	req.Header.Add("Referer", baseUrl)
 	cookie := http.Cookie {
 		Name: "over18",
-		Value: "1"
+		Value: "1",
 	}
 	req.Header.Add("Cookie", cookie) // 也可以通过req.Cookie()的方式来设置cookie
 	res, err := client.Do(req)
