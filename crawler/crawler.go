@@ -51,8 +51,8 @@ func getAllArticles() {
 	req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
 	req.Header.Add("Referer", baseUrl)
 	cookie := http.Cookie{
-		Name: "over18"
-		Value: "1",
+		Name: "over18",
+		Value: "1"
 	}
 	req.Header.Add("Cookie", cookie) // 也可以通过req.Cookie()的方式来设置cookie
 	res, err := client.Do(req)
