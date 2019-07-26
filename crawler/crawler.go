@@ -26,6 +26,14 @@ func Start(w http.ResponseWriter, r *http.Request) {
 	getAllArticles()
 }
 
+func over18() {
+	cookie := http.Cookie{
+		Name: "over18"
+		Value: "1",
+	}
+
+}
+
 func getAllArticles() {
 
 	var BOOL = true
@@ -45,7 +53,21 @@ func getAllArticles() {
 			url = BasePttAddress + href
 		}
 
-		doc, err := goquery.NewDocument(url)
+
+	client:=&http.Client{}
+	req, err := http.NewRequest("GET", url, nil)
+	req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
+	req.Header.Add("Referer", baseUrl)
+	cookie := http.Cookie{
+		Name: "over18"
+		Value: "1",
+	}
+	req.Header.Add("Cookie", cookie) // 也可以通过req.Cookie()的方式来设置cookie
+	res, err := client.Do(req)
+	defer res.Body.Close()
+	//最后直接把res传给goquery就可以来解析网页了
+
+		doc, err := goquery.NewDocumentFromResponse(res)
 		if err != nil {
 			log.Fatal(err)
 		}
