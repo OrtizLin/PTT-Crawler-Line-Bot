@@ -38,7 +38,7 @@ func SaveToken(token string) bool {
 		return false
 	} else {
 		connect := linenotify.New()
-		connect.NotifyWithImageURL(user.UserToken, "恭喜您已與表特爆報連動 , 若表特版有精彩文章將會立即通知您。", "https://image.famitsu.hk/201712/47dec32c774c3fd60deb142192fcee93_m.jpg", "https://image.famitsu.hk/201712/47dec32c774c3fd60deb142192fcee93_m.jpg")
+		connect.NotifyWithImageURL(user.UserToken, "恭喜您已與表特爆報連動 , 若表特版有精彩文章將會立即通知您。", "https://i.imgur.com/wIdGRrU.jpg", "https://i.imgur.com/wIdGRrU.jpg")
 		return true
 	}
 
