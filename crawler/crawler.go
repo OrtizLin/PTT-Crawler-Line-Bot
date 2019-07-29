@@ -81,7 +81,7 @@ func getAllArticles(fourm string) {
 			hrefs, _ := s.Find(".title a").Attr("href")
 			article.Link = BasePttAddress + hrefs
 			article.Date = strings.TrimSpace(s.Find(".meta").Find(".date").Text())
-			article.ImageLink = "https://i.imgur.com/aQjMlmV.jpg" // 先塞入預設imageLink
+			article.ImageLink = "https://i.imgur.com/wIdGRrU.jpg" // 先塞入預設imageLink
 			article.LikeCountString = s.Find(".nrec span").Text()
 			if article.Date != time.Format("1/02") {
 				if crawlerCount > 0 {

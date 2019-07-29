@@ -97,7 +97,7 @@ func (app *LineBotStruct) handleText(message *linebot.TextMessage, replyToken st
 			template := linebot.NewCarouselTemplate(columns...)
 			if _, err := app.bot.ReplyMessage(
 				replyToken,
-				linebot.NewTemplateMessage("正妹來囉！", template),
+				linebot.NewTemplateMessage("文章來囉！", template),
 			).Do(); err != nil {
 				return err
 
