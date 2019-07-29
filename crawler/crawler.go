@@ -108,7 +108,7 @@ func getAllArticles(fourm string) {
 					}
 					return true
 				})
-				log.Println(article.Date + " 標題: " + article.Title)
+				log.Println(article.Date + fourm + " 版 - " + " 標題: (" + article.LikeCount + ")" + article.Title)
 				db.InsertArticle(article.Title, article.LikeCount, article.Link, article.Date, article.ImageLink, article.LikeCountString)
 			}
 		})
