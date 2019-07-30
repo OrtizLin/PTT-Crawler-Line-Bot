@@ -70,7 +70,7 @@ func InsertArticle(title string, likeCount int, link string, date string, imageL
 				iter := c3.Find(nil).Iter()
 				for iter.Next(&users) {
 					connect := linenotify.New()
-					content := "\n" + link
+					content := " " + title + "\n" + link
 					connect.NotifyWithImageURL(users.UserToken, content, imageLink, imageLink)
 				}
 
