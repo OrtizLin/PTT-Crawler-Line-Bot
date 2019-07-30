@@ -38,7 +38,7 @@ func SaveToken(token string) bool {
 	c := getDB().C("tokendb")
 	user := User{}
 	user.UserToken = token
-	errs = c.Insert(&User{user.UserToken})
+	errs := c.Insert(&User{user.UserToken})
 	if errs != nil {
 		log.Fatal(errs)
 		return false
@@ -53,9 +53,9 @@ func SaveToken(token string) bool {
 func InsertArticle(title string, likeCount int, link string, date string, imageLink string, likeCountString string) {
 
 	c := getDB().C("xtest")
-	c := getDB().C("alreadysent")
-	c := getDB().C("tokendb")
-	errs = c.Insert(&Article{title, likeCount, link, date, imageLink, likeCountString})
+	c2 := getDB().C("alreadysent")
+	c3 := getDB().C("tokendb")
+	errs := c.Insert(&Article{title, likeCount, link, date, imageLink, likeCountString})
 	if errs != nil {
 		log.Fatal(errs)
 	} else {
