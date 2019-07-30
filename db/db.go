@@ -22,17 +22,23 @@ type Article struct {
 	LikeCountString string
 }
 
+func getDB() *mgo.Database {
+	session, err := mgo.Dial(os.Getenv("DBURL"))
+	if err != nil {
+		panic(err)
+	}
+
+	session.SetMode(mgo.Monotonic, true)
+	db := session.DB("xtest")
+	return db
+}
+
 func SaveToken(token string) bool {
 
-	session, errs := mgo.Dial(os.Getenv("DBURL"))
-	if errs != nil {
-		panic(errs)
-	}
-	defer session.Close()
-	collect := session.DB("xtest").C("tokendb")
+	c := getDB().C("tokendb")
 	user := User{}
 	user.UserToken = token
-	errs = collect.Insert(&User{user.UserToken})
+	errs = c.Insert(&User{user.UserToken})
 	if errs != nil {
 		log.Fatal(errs)
 		return false
@@ -45,14 +51,10 @@ func SaveToken(token string) bool {
 }
 
 func InsertArticle(title string, likeCount int, link string, date string, imageLink string, likeCountString string) {
-	session, errs := mgo.Dial(os.Getenv("DBURL"))
-	if errs != nil {
-		panic(errs)
-	}
-	defer session.Close()
-	c := session.DB("xtest").C("xtest")
-	c2 := session.DB("xtest").C("alreadysent")
-	c3 := session.DB("xtest").C("tokendb")
+
+	c := getDB().C("xtest")
+	c := getDB().C("alreadysent")
+	c := getDB().C("tokendb")
 	errs = c.Insert(&Article{title, likeCount, link, date, imageLink, likeCountString})
 	if errs != nil {
 		log.Fatal(errs)
@@ -81,13 +83,10 @@ func InsertArticle(title string, likeCount int, link string, date string, imageL
 }
 
 func SearchArticle(message string) (article []Article) {
+	
 	var articles []Article
-	session, errs := mgo.Dial(os.Getenv("DBURL"))
-	if errs != nil {
-		panic(errs)
-	}
-	defer session.Close()
-	c := session.DB("xtest").C("xtest")
+
+	c := getDB().C("xtest")
 	result := Article{}
 	iter := c.Find(bson.M{"title": bson.M{"$regex": message}}).Iter()
 	count := 0
@@ -102,12 +101,8 @@ func SearchArticle(message string) (article []Article) {
 }
 
 func RemoveALL() {
-	session, errs := mgo.Dial(os.Getenv("DBURL"))
-	if errs != nil {
-		panic(errs)
-	}
-	defer session.Close()
-	c := session.DB("xtest").C("xtest")
+
+	c := getDB().C("xtest")
 	//Clean DB
 	c.RemoveAll(nil)
 }
