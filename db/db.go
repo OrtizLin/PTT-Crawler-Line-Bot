@@ -57,7 +57,7 @@ func InsertArticle(title string, likeCount int, link string, date string, imageL
 	if errs != nil {
 		log.Fatal(errs)
 	} else {
-		if likeCountString == "爆" && strings.Contains(title, "帥哥") == false {
+		if likeCountString == "爆" && strings.Contains(title, "帥哥") == false && strings.Contains(title, "創作") == false {
 			result := Article{}
 			err := c2.Find(bson.M{"link": link}).One(&result) //check if article already send
 			if err != nil {
