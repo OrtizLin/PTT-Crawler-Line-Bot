@@ -1,4 +1,4 @@
-![release-badge](https://img.shields.io/badge/Release-Ver2.0.0-blue.svg)![line-bot](https://img.shields.io/badge/WebCrawler-orange.svg)![web-crawler](https://img.shields.io/badge/Golang-green.svg)![golang](https://img.shields.io/badge/Bot-Line-brown.svg)
+![release-badge](https://img.shields.io/badge/Release-Ver2.0.0-blue.svg) ![line-bot](https://img.shields.io/badge/WebCrawler-orange.svg) ![web-crawler](https://img.shields.io/badge/Golang-green.svg) ![golang](https://img.shields.io/badge/Bot-Line-brown.svg)
 
 # Line-bot (PTT Beauty, Sex)
 
