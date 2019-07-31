@@ -23,8 +23,8 @@ type Article struct {
 
 func Start(w http.ResponseWriter, r *http.Request) {
 	db.RemoveALL()
-	getAllArticles("Beauty")
-	getAllArticles("Sex")
+	go getAllArticles("Beauty")
+	go getAllArticles("Sex")
 }
 
 func getAllArticles(fourm string) {
