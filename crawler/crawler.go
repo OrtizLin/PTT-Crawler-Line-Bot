@@ -29,7 +29,7 @@ func Start(w http.ResponseWriter, r *http.Request) {
 	db.RemoveALL()
 	
 	// 用來抓取最新熱門看板
-	// getHotBoards() 
+	go getHotBoards() 
 
 
 	// 爬所有熱門看板的當日文章
@@ -41,7 +41,7 @@ func Start(w http.ResponseWriter, r *http.Request) {
 	// defer session.Close()
 	// c := session.DB("xtest").C("hotboard")
 	// err := c.Find(nil).All(&results)
- // 	if err != nil {
+    // 	if err != nil {
 	// 	panic(errs)
 	// }
 	// for i := 0; i < len(results); i++ {
@@ -55,8 +55,9 @@ func Start(w http.ResponseWriter, r *http.Request) {
 func getHotBoards() { // 取得熱門看板
 
 	var url string = BasePttAddress + "/bbs/hotboards.html"
+	var boards []string
 
-		// 設定 header 以及 滿18歲cookie
+	// 設定 header 以及 滿18歲cookie
 	client:=&http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
@@ -76,7 +77,8 @@ func getHotBoards() { // 取得熱門看板
 		}
 
 		doc.Find(".b-ent").Each(func(i int, s *goquery.Selection) {
-			db.InsertHotBoard(s.Find(".board-name").Text())
+			boards = append(boards, s.Find(".board-name").Text())
+			db.InsertHotBoard(boards)
 		})
 
 }

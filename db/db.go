@@ -48,7 +48,7 @@ func SaveToken(token string) bool {
 
 }
 
-func InsertHotBoard(board string) {
+func InsertHotBoard(boards []string) {
 
 	session, errs := mgo.Dial(os.Getenv("DBURL"))
 	if errs != nil {
@@ -56,7 +56,7 @@ func InsertHotBoard(board string) {
 	}
 	defer session.Close()
 	c := session.DB("xtest").C("hotboard")
-	errs = c.Insert(&HotBorads{board})
+	errs = c.Insert(&HotBorads{boards})
 	if errs != nil {
 		log.Fatal(errs)
 	} 
