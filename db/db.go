@@ -13,6 +13,10 @@ type User struct {
 	UserToken string
 }
 
+type HotBorads struct {
+	Board string
+}
+
 type Article struct {
 	Title           string
 	LikeCount       int
@@ -42,6 +46,21 @@ func SaveToken(token string) bool {
 		return true
 	}
 
+}
+
+func InsertHotBoard(board string) {
+
+	session, errs := mgo.Dial(os.Getenv("DBURL"))
+	if errs != nil {
+		panic(errs)
+	}
+	defer session.Close()
+	c := session.DB("xtest").C("hotboard")
+	errs = c.Insert(&HotBorads{board})
+	if errs != nil {
+		log.Fatal(errs)
+	} 
+	
 }
 
 func InsertArticle(title string, likeCount int, link string, date string, imageLink string, likeCountString string) {
