@@ -111,9 +111,7 @@ func InsertArticle(title string, likeCount int, link string, date string, imageL
 				for iter.Next(&users) {
 					connect := linenotify.New()
 					content := " " + title + "\n" + link
-					if users.UserToken == "VHKdxBEshZPE716dG3xNrQ8pVU9mA9VBn7Tr10IddvS" {
 						connect.NotifyWithImageURL(users.UserToken, content, imageLink, imageLink)
-					}
 				}
 
 			}
@@ -143,13 +141,13 @@ func SearchArticle(message string) (article []Article) {
 	return articles
 }
 
-func RemoveALL() {
+func RemoveALL(collect string) {
 	session, errs := mgo.Dial(os.Getenv("DBURL"))
 	if errs != nil {
 		panic(errs)
 	}
 	defer session.Close()
-	c := session.DB("xtest").C("xtest")
+	c := session.DB("xtest").C(collect)
 	//Clean DB
 	c.RemoveAll(nil)
 
