@@ -14,7 +14,7 @@ type User struct {
 }
 
 type HotBorads struct {
-	Board string
+	Board []string
 }
 
 type Article struct {
