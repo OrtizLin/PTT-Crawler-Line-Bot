@@ -30,25 +30,28 @@ type HotBoard struct {
 func Start(w http.ResponseWriter, r *http.Request) {
 	db.RemoveALL()
 	
-	// getHotBoards()
+	// 用來抓取最新熱門看板
+	// getHotBoards() 
 
-	var results []HotBoard
-	session, errs := mgo.Dial(os.Getenv("DBURL"))
-	if errs != nil {
-		panic(errs)
-	}
-	defer session.Close()
-	c := session.DB("xtest").C("hotboard")
-	err := c.Find(nil).All(&results)
- 	if err != nil {
-		panic(errs)
-	}
-	for i := 0; i < len(results); i++ {
-		go getAllArticles(results[i].Board)
-	}
 
-	// go getAllArticles("Beauty")
-	// go getAllArticles("Sex")
+	// 爬所有熱門看板的當日文章
+	// var results []HotBoard
+	// session, errs := mgo.Dial(os.Getenv("DBURL"))
+	// if errs != nil {
+	// 	panic(errs)
+	// }
+	// defer session.Close()
+	// c := session.DB("xtest").C("hotboard")
+	// err := c.Find(nil).All(&results)
+ // 	if err != nil {
+	// 	panic(errs)
+	// }
+	// for i := 0; i < len(results); i++ {
+	// 	go getAllArticles(results[i].Board)
+	// }
+
+	go getAllArticles("Beauty")
+	go getAllArticles("Sex")
 }
 
 func getHotBoards() { // 取得熱門看板
