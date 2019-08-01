@@ -52,8 +52,7 @@ func getHotBoards() {
 		}
 
 		doc.Find(".b-ent").Each(func(i int, s *goquery.Selection) {
-			boradName, _ := s.Find("board").Attr("board-name")
-			log.Print(boradName)
+			log.Print(s)
 		})
 
 }
