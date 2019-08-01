@@ -19,6 +19,7 @@ type Article struct {
 	Date            string
 	ImageLink       string
 	LikeCountString string
+	Board 			string
 }
 
 type HotBoard struct {
@@ -131,6 +132,7 @@ func getAllArticles(fourm string) {
 			article.Date = strings.TrimSpace(s.Find(".meta").Find(".date").Text())
 			article.ImageLink = "https://i.imgur.com/wIdGRrU.jpg" // 先塞入預設imageLink
 			article.LikeCountString = s.Find(".nrec span").Text()
+			article.Board = forum
 			if article.Date != time.Format("1/02") {
 				if crawlerCount > 0 {
 					BOOL = false // 爬不到今日文章後 停止爬蟲
@@ -157,7 +159,7 @@ func getAllArticles(fourm string) {
 					return true
 				})
 				log.Println(article.Date + " " + fourm + "版-" + "標題: (" + article.LikeCountString + ")" + article.Title)
-				db.InsertArticle(article.Title, article.LikeCount, article.Link, article.Date, article.ImageLink, article.LikeCountString)
+				db.InsertArticle(article.Title, article.LikeCount, article.Link, article.Date, article.ImageLink, article.LikeCountString, article.Board)
 			}
 		})
 		crawlerCount = crawlerCount + 1

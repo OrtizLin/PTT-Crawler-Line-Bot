@@ -24,6 +24,7 @@ type Article struct {
 	Date            string
 	ImageLink       string
 	LikeCountString string
+	Board 			string
 }
 
 func SaveToken(token string) bool {
@@ -84,7 +85,7 @@ func InsertHotBoard(boards []string) {
 
 }
 
-func InsertArticle(title string, likeCount int, link string, date string, imageLink string, likeCountString string) {
+func InsertArticle(title string, likeCount int, link string, date string, imageLink string, likeCountString string, board string) {
 	session, errs := mgo.Dial(os.Getenv("DBURL"))
 	if errs != nil {
 		panic(errs)
@@ -93,7 +94,7 @@ func InsertArticle(title string, likeCount int, link string, date string, imageL
 	c := session.DB("xtest").C("xtest")
 	c2 := session.DB("xtest").C("alreadysent")
 	c3 := session.DB("xtest").C("tokendb")
-	errs = c.Insert(&Article{title, likeCount, link, date, imageLink, likeCountString})
+	errs = c.Insert(&Article{title, likeCount, link, date, imageLink, likeCountString, board})
 	if errs != nil {
 		log.Fatal(errs)
 	} else {
@@ -101,7 +102,7 @@ func InsertArticle(title string, likeCount int, link string, date string, imageL
 			result := Article{}
 			err := c2.Find(bson.M{"link": link}).One(&result) //check if article already send
 			if err != nil {
-				err3 := c2.Insert(&Article{title, likeCount, link, date, imageLink, likeCountString})
+				err3 := c2.Insert(&Article{title, likeCount, link, date, imageLink, likeCountString, board})
 				if err3 != nil {
 					log.Fatal(err3)
 				}
@@ -110,7 +111,7 @@ func InsertArticle(title string, likeCount int, link string, date string, imageL
 				iter := c3.Find(nil).Iter()
 				for iter.Next(&users) {
 					connect := linenotify.New()
-					content := " " + title + "\n" + link
+					content := board + "版 - " + title + "\n" + link
 						connect.NotifyWithImageURL(users.UserToken, content, imageLink, imageLink)
 				}
 
