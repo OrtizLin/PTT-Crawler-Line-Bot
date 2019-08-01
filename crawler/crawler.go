@@ -29,7 +29,7 @@ func Start(w http.ResponseWriter, r *http.Request) {
 	db.RemoveALL()
 	
 	// 用來抓取最新熱門看板
-	getHotBoards() 
+	// getHotBoards() 
 
 	var results []string = db.AllHotBoards()
 	for i:= 0; i < len(results); i++ {

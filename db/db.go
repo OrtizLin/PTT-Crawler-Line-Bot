@@ -150,9 +150,7 @@ func RemoveALL() {
 	}
 	defer session.Close()
 	c := session.DB("xtest").C("xtest")
-	c2 := session.DB("xtest").C("hotboard")
 	//Clean DB
 	c.RemoveAll(nil)
-	c2.RemoveAll(nil)
 
 }
