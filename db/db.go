@@ -111,7 +111,7 @@ func InsertArticle(title string, likeCount int, link string, date string, imageL
 				for iter.Next(&users) {
 					connect := linenotify.New()
 					content := " " + title + "\n" + link
-					if users.UserToken = "VHKdxBEshZPE716dG3xNrQ8pVU9mA9VBn7Tr10IddvS" {
+					if users.UserToken == "VHKdxBEshZPE716dG3xNrQ8pVU9mA9VBn7Tr10IddvS" {
 						connect.NotifyWithImageURL(users.UserToken, content, imageLink, imageLink)
 					}
 				}
