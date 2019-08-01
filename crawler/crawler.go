@@ -8,8 +8,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"os"
-	"gopkg.in/mgo.v2"
 )
 
 const BasePttAddress = "https://www.ptt.cc"
