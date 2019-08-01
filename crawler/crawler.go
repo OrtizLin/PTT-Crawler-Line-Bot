@@ -29,11 +29,14 @@ func Start(w http.ResponseWriter, r *http.Request) {
 	db.RemoveALL()
 	
 	// 用來抓取最新熱門看板
-	go getHotBoards() 
+	getHotBoards() 
 
-
+	var results []string = db.AllHotBoards()
+	for i:= 0; i < len(results); i++ {
+		go getAllArticles(results[i])
+	}
 	// 爬所有熱門看板的當日文章
-	// var results []HotBoard
+	// var results []String
 	// session, errs := mgo.Dial(os.Getenv("DBURL"))
 	// if errs != nil {
 	// 	panic(errs)
@@ -48,8 +51,8 @@ func Start(w http.ResponseWriter, r *http.Request) {
 	// 	go getAllArticles(results[i].Board)
 	// }
 
-	go getAllArticles("Beauty")
-	go getAllArticles("Sex")
+	// go getAllArticles("Beauty")
+	// go getAllArticles("Sex")
 }
 
 func getHotBoards() { // 取得熱門看板

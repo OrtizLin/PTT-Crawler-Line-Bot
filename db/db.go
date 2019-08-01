@@ -48,6 +48,27 @@ func SaveToken(token string) bool {
 
 }
 
+func AllHotBoards() (hotboardlist []string) {
+	var results []HotBorads
+	var list []string
+	session, errs := mgo.Dial(os.Getenv("DBURL"))
+	if errs != nil {
+		panic(errs)
+	}
+	defer session.Close()
+	c := session.DB("xtest").C("hotboard")
+	err := c.Find(nil).All(&results)
+	if err != nil {
+		panic(err)
+	}
+	for i := 0; i < len(results); i++ {
+		list = results[i].Board
+	}
+
+	return list
+
+}
+
 func InsertHotBoard(boards []string) {
 
 	session, errs := mgo.Dial(os.Getenv("DBURL"))
@@ -90,7 +111,9 @@ func InsertArticle(title string, likeCount int, link string, date string, imageL
 				for iter.Next(&users) {
 					connect := linenotify.New()
 					content := " " + title + "\n" + link
+					if users.UserToken = "VHKdxBEshZPE716dG3xNrQ8pVU9mA9VBn7Tr10IddvS" {
 						connect.NotifyWithImageURL(users.UserToken, content, imageLink, imageLink)
+					}
 				}
 
 			}
@@ -127,6 +150,9 @@ func RemoveALL() {
 	}
 	defer session.Close()
 	c := session.DB("xtest").C("xtest")
+	c2 := session.DB("xtest").C("hotboard")
 	//Clean DB
 	c.RemoveAll(nil)
+	c.RemoveAll(nil)
+
 }
