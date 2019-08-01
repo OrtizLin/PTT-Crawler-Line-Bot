@@ -99,7 +99,7 @@ func getAllArticles(fourm string) {
 		}
 
 		//Find previous link
-		doc.Find(".btn-group a").Each(func(i int, s *goquery.Selection) {
+		doc.Find(".btn-group").Each(func(i int, s *goquery.Selection) {
 			if strings.Contains(s.Text(), "上頁") {
 				href, exist = s.Attr("href")
 			}
