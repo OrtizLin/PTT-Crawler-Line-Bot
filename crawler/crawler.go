@@ -8,6 +8,9 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"os"
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
 const BasePttAddress = "https://www.ptt.cc"
@@ -42,7 +45,7 @@ func Start(w http.ResponseWriter, r *http.Request) {
 		panic(errs)
 	}
 	for i := 0; i < len(results); i++ {
-		go getAllArticles(results.Board)
+		go getAllArticles(results.board)
 	}
 
 	// go getAllArticles("Beauty")
