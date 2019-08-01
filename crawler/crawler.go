@@ -76,7 +76,7 @@ func getHotBoards() { // 取得熱門看板
 
 }
 
-func getAllArticles(fourm string) {
+func getAllArticles(forum string) {
 
 	var BOOL = true
 	var exist = true
@@ -92,7 +92,7 @@ func getAllArticles(fourm string) {
 	for BOOL {
 
 		if href == "" {
-			url = BasePttAddress + "/bbs/" + fourm + "/index.html" // 首頁
+			url = BasePttAddress + "/bbs/" + forum + "/index.html" // 首頁
 		} else {
 			url = BasePttAddress + href // 翻至下一頁
 		}
@@ -158,7 +158,7 @@ func getAllArticles(fourm string) {
 					}
 					return true
 				})
-				log.Println(article.Date + " " + fourm + "版-" + "標題: (" + article.LikeCountString + ")" + article.Title)
+				log.Println(article.Date + " " + forum + "版-" + "標題: (" + article.LikeCountString + ")" + article.Title)
 				db.InsertArticle(article.Title, article.LikeCount, article.Link, article.Date, article.ImageLink, article.LikeCountString, article.Board)
 			}
 		})
