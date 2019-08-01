@@ -23,8 +23,39 @@ type Article struct {
 
 func Start(w http.ResponseWriter, r *http.Request) {
 	db.RemoveALL()
+	getHotBoards()
 	go getAllArticles("Beauty")
 	go getAllArticles("Sex")
+}
+
+func getHotBoards() {
+
+	var url string = BasePttAddress + "/bbs/hotboards.html"
+
+		// 設定 header 以及 滿18歲cookie
+	client:=&http.Client{}
+	req, err := http.NewRequest("GET", url, nil)
+	req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
+	req.Header.Add("Referer", url)
+	cookie := http.Cookie {
+		Name: "over18",
+		Value: "1",
+	}
+	req.AddCookie(&cookie)
+	res, err := client.Do(req)
+	defer res.Body.Close()
+
+	// 最後直接把res傳给goquery就可以來解析網頁
+		doc, err := goquery.NewDocumentFromResponse(res)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		doc.Find(".b-ent a").Attr("board").Each(func(i int, s *goquery.Selection) {
+			boradName, _ := s.Find("board-name")
+			log.Print(boradName)
+		})
+
 }
 
 func getAllArticles(fourm string) {
