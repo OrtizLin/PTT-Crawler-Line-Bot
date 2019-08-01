@@ -153,6 +153,6 @@ func RemoveALL() {
 	c2 := session.DB("xtest").C("hotboard")
 	//Clean DB
 	c.RemoveAll(nil)
-	c.RemoveAll(nil)
+	c2.RemoveAll(nil)
 
 }
