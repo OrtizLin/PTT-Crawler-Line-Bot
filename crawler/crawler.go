@@ -78,8 +78,9 @@ func getHotBoards() { // 取得熱門看板
 
 		doc.Find(".b-ent").Each(func(i int, s *goquery.Selection) {
 			boards = append(boards, s.Find(".board-name").Text())
-			db.InsertHotBoard(boards)
 		})
+		
+		db.InsertHotBoard(boards)
 
 }
 
