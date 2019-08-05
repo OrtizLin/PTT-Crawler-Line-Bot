@@ -41,7 +41,7 @@ func Start(w http.ResponseWriter, r *http.Request) {
 
 	// 只撈表特+西斯版
 	go getAllArticles("Beauty")
-	go getAllArticles("Sex")
+	// go getAllArticles("Sex")
 }
 
 func getHotBoards() { // 取得熱門看板
