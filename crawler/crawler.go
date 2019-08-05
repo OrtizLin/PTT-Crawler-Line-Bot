@@ -82,7 +82,7 @@ func getAllArticles(forum string) {
 	var exist = true
 	var url string = ""  // default url
 	var href string = "" // next page url
-	var crawlerCount = 0
+	crawlerCount := 0
 
 	// today's date
 	loc, _ := time.LoadLocation("Asia/Chongqing")
