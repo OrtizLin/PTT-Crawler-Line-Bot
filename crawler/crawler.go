@@ -40,7 +40,7 @@ func Start(w http.ResponseWriter, r *http.Request) {
 	// }
 
 	// 只撈表特+西斯版
-	getAllArticles("Beauty")
+	go getAllArticles("Beauty")
 	// go getAllArticles("Sex")
 }
 
@@ -97,7 +97,6 @@ func getAllArticles(forum string) {
 			nextURL = BasePttAddress + href // 翻至下一頁
 		}
 
-		log.Println(nextURL)
 	// 設定 header 以及 滿18歲cookie
 	client:=&http.Client{}
 	req, err := http.NewRequest("GET", nextURL, nil)
@@ -123,7 +122,7 @@ func getAllArticles(forum string) {
 			if strings.Contains(s.Text(), "上頁") {
 				href, exist = s.Attr("href")
 			}
-			
+
 		})
 
 		doc.Find(".r-ent").Each(func(i int, s *goquery.Selection) {
