@@ -145,24 +145,31 @@ func getAllArticles(forum string) {
 			// 若文章內含有https及.jpg 的字串, 儲存為article.ImageLink.
 			if article.Date == time.Format("1/02") && article.Link != BasePttAddress {
 				//search image link in article
-				doc, err := goquery.NewDocument(article.Link)
+				// 設定 header 以及 滿18歲cookie
+			client:=&http.Client{}
+			req, err := http.NewRequest("GET", nextURL, nil)
+			req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
+			req.Header.Add("Referer", nextURL)
+			cookie := http.Cookie {
+				Name: "over18",
+				Value: "1",
+			}
+			req.AddCookie(&cookie)
+			res, err := client.Do(req)
+			defer res.Body.Close()
+
+			// 最後直接把res傳给goquery就可以來解析網頁
+			doc, err := goquery.NewDocumentFromResponse(res)
 				if err != nil {
 					log.Fatal(err)
 				}
-				log.Println("搜尋" + article.Link)
 
-			   doc.Find(".main-container").Each(func(i int, s *goquery.Selection){
-      			  log.Println(s.Text())
-				  log.Println("************a")
-    			})
-
-				doc.Find(".main-content").EachWithBreak(func(i int, s *goquery.Selection) bool {
-					log.Println(s.Text())
-					log.Println("************")
+				doc.Find("#main-content > a").EachWithBreak(func(i int, s *goquery.Selection) bool {
 					imgLink := s.Text()
 					if strings.Contains(imgLink, ".jpg") {
 						if strings.Contains(imgLink, "https") {
 							article.ImageLink = imgLink
+							log.Println(article.ImageLink)
 							return false
 						}
 					}
