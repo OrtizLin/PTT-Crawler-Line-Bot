@@ -51,14 +51,15 @@ func getHotBoards() { // 取得熱門看板
 
 	// 設定 header 以及 滿18歲cookie
 	client:=&http.Client{}
-	req, err := http.NewRequest("GET", url, nil)
-	req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
-	req.Header.Add("Referer", url)
-	cookie := http.Cookie {
-		Name: "over18",
-		Value: "1",
-	}
-	req.AddCookie(&cookie)
+	// req, err := http.NewRequest("GET", url, nil)
+	// req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
+	// req.Header.Add("Referer", url)
+	// cookie := http.Cookie {
+	// 	Name: "over18",
+	// 	Value: "1",
+	// }
+	// req.AddCookie(&cookie)
+	req := passR18(url)
 	res, err := client.Do(req)
 	defer res.Body.Close()
 
@@ -99,14 +100,15 @@ func getAllArticles(forum string) {
 
 	// 設定 header 以及 滿18歲cookie
 	client:=&http.Client{}
-	req, err := http.NewRequest("GET", nextURL, nil)
-	req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
-	req.Header.Add("Referer", nextURL)
-	cookie := http.Cookie {
-		Name: "over18",
-		Value: "1",
-	}
-	req.AddCookie(&cookie)
+	// req, err := http.NewRequest("GET", nextURL, nil)
+	// req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
+	// req.Header.Add("Referer", nextURL)
+	// cookie := http.Cookie {
+	// 	Name: "over18",
+	// 	Value: "1",
+	// }
+	// req.AddCookie(&cookie)
+	req := passR18(nextURL)
 	res, err := client.Do(req)
 	defer res.Body.Close()
 
@@ -148,14 +150,15 @@ func getAllArticles(forum string) {
 
 					// 設定 header 以及 滿18歲cookie
 			client:=&http.Client{}
-			req, err := http.NewRequest("GET", article.Link, nil)
-			req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
-			req.Header.Add("Referer", article.Link)
-			cookie := http.Cookie {
-				Name: "over18",
-				Value: "1",
-			}
-			req.AddCookie(&cookie)
+			// req, err := http.NewRequest("GET", article.Link, nil)
+			// req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
+			// req.Header.Add("Referer", article.Link)
+			// cookie := http.Cookie {
+			// 	Name: "over18",
+			// 	Value: "1",
+			// }
+			// req.AddCookie(&cookie)
+			req := passR18(article.Link)
 			res, err := client.Do(req)
 			defer res.Body.Close()
 
@@ -181,5 +184,25 @@ func getAllArticles(forum string) {
 		})
 		crawlerCount = crawlerCount + 1
 	}
+
+}
+
+func passR18(reqURL string) (req *http.Request) {
+
+	req, _ = http.NewRequest("GET", reqURL, nil)
+
+	over18Cookie := http.Cookie{
+		Name:       "over18",
+		Value:      "1",
+		Domain:     "www.ptt.cc",
+		Path:       "/",
+		RawExpires: "Session",
+		MaxAge:     0,
+		HttpOnly:   false,
+	}
+
+	req.AddCookie(&over18Cookie)
+
+	return req
 
 }
