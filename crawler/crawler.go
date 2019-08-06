@@ -122,7 +122,7 @@ func getAllArticles(forum string) {
 
 			if i == 1 {
 				log.Println("******")
-				href, exist = s.Attr("href")
+				href, exist := s.Attr("href")
 				log.Println(hrefs)
 				log.Println(exist)
 			}
