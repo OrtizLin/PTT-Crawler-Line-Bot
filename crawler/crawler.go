@@ -49,16 +49,7 @@ func getHotBoards() { // 取得熱門看板
 	var url string = BasePttAddress + "/bbs/hotboards.html"
 	var boards []string
 
-	// 設定 header 以及 滿18歲cookie
 	client:=&http.Client{}
-	// req, err := http.NewRequest("GET", url, nil)
-	// req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
-	// req.Header.Add("Referer", url)
-	// cookie := http.Cookie {
-	// 	Name: "over18",
-	// 	Value: "1",
-	// }
-	// req.AddCookie(&cookie)
 	req := passR18(url)
 	res, err := client.Do(req)
 	defer res.Body.Close()
@@ -98,16 +89,7 @@ func getAllArticles(forum string) {
 			nextURL = BasePttAddress + href // 翻至下一頁
 		}
 
-	// 設定 header 以及 滿18歲cookie
 	client:=&http.Client{}
-	// req, err := http.NewRequest("GET", nextURL, nil)
-	// req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
-	// req.Header.Add("Referer", nextURL)
-	// cookie := http.Cookie {
-	// 	Name: "over18",
-	// 	Value: "1",
-	// }
-	// req.AddCookie(&cookie)
 	req := passR18(nextURL)
 	res, err := client.Do(req)
 	defer res.Body.Close()
@@ -148,16 +130,7 @@ func getAllArticles(forum string) {
 			if article.Date == time.Format("1/02") && article.Link != BasePttAddress {
 				//search image link in article
 
-					// 設定 header 以及 滿18歲cookie
 			client:=&http.Client{}
-			// req, err := http.NewRequest("GET", article.Link, nil)
-			// req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
-			// req.Header.Add("Referer", article.Link)
-			// cookie := http.Cookie {
-			// 	Name: "over18",
-			// 	Value: "1",
-			// }
-			// req.AddCookie(&cookie)
 			req := passR18(article.Link)
 			res, err := client.Do(req)
 			defer res.Body.Close()
@@ -189,6 +162,7 @@ func getAllArticles(forum string) {
 
 func passR18(reqURL string) (req *http.Request) {
 
+	// 設定 header 以及 滿18歲cookie
 	req, _ = http.NewRequest("GET", reqURL, nil)
 
 	over18Cookie := http.Cookie{
