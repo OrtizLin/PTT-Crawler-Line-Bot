@@ -160,7 +160,7 @@ func getAllArticles(forum string) {
 			defer res.Body.Close()
 
 			// 最後直接把res傳给goquery就可以來解析網頁
-				doc, err := goquery.NewDocumentFromResponse(article.Link)
+				doc, err := goquery.NewDocumentFromResponse(res)
 				if err != nil {
 					log.Fatal(err)
 				}
