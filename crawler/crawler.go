@@ -118,13 +118,13 @@ func getAllArticles(forum string) {
 		}
 
 		//Find previous link
-		doc.Find(".btn-group").Each(func(i int, s *goquery.Selection) {
+		doc.Find(".btn-group a").Each(func(i int, s *goquery.Selection) {
 
 			if i == 1 {
 				log.Println("******")
-
-				hrefs := s.Find("href").Text()
+				href, exist = s.Attr("href")
 				log.Println(hrefs)
+				log.Println(exist)
 			}
 
 			if strings.Contains(s.Text(), "上頁") {
