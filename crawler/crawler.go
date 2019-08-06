@@ -149,7 +149,7 @@ func getAllArticles(forum string) {
 				if err != nil {
 					log.Fatal(err)
 				}
-				log.Println("搜尋" + article.link)
+				log.Println("搜尋" + article.Link)
 
 				doc.Find(".main-content").EachWithBreak(func(i int, s *goquery.Selection) bool {
 					log.Println(s.Text())
