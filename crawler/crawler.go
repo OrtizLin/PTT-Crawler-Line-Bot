@@ -154,14 +154,16 @@ func getAllArticles(forum string) {
 				}
 
 				doc.Find("main-content a").EachWithBreak(func(i int, s *goquery.Selection) bool {
-					imgLink := s.Attr("href")
+					imgLink, exist := s.Attr("href")
 					log.Println("*******")
 					log.Println(imgLink)
+					if exist == true {
 					if strings.Contains(imgLink, ".jpg") {
 						if strings.Contains(imgLink, "https") {
 							article.ImageLink = imgLink
 							return false
 						}
+					}
 					}
 					return true
 				})
