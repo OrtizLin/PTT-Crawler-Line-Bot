@@ -49,7 +49,17 @@ func getHotBoards() { // 取得熱門看板
 	var url string = BasePttAddress + "/bbs/hotboards.html"
 	var boards []string
 
-	res, err := client.Do(passR18(url))
+	// 設定 header 以及 滿18歲cookie
+	client:=&http.Client{}
+	req, err := http.NewRequest("GET", url, nil)
+	req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
+	req.Header.Add("Referer", url)
+	cookie := http.Cookie {
+		Name: "over18",
+		Value: "1",
+	}
+	req.AddCookie(&cookie)
+	res, err := client.Do(req)
 	defer res.Body.Close()
 
 	// 最後直接把res傳给goquery就可以來解析網頁
@@ -65,7 +75,6 @@ func getHotBoards() { // 取得熱門看板
 		db.InsertHotBoard(boards)
 
 }
-
 
 func getAllArticles(forum string) {
 
@@ -88,8 +97,17 @@ func getAllArticles(forum string) {
 			nextURL = BasePttAddress + href // 翻至下一頁
 		}
 
-
-	res, err := client.Do(passR18(nextURL))
+	// 設定 header 以及 滿18歲cookie
+	client:=&http.Client{}
+	req, err := http.NewRequest("GET", nextURL, nil)
+	req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
+	req.Header.Add("Referer", nextURL)
+	cookie := http.Cookie {
+		Name: "over18",
+		Value: "1",
+	}
+	req.AddCookie(&cookie)
+	res, err := client.Do(req)
 	defer res.Body.Close()
 
 	// 最後直接把res傳给goquery就可以來解析網頁
@@ -127,58 +145,41 @@ func getAllArticles(forum string) {
 			// 若文章內含有https及.jpg 的字串, 儲存為article.ImageLink.
 			if article.Date == time.Format("1/02") && article.Link != BasePttAddress {
 				//search image link in article
-			
-			res, err := client.Do(passR18(article.Link))
+
+					// 設定 header 以及 滿18歲cookie
+			client:=&http.Client{}
+			req, err := http.NewRequest("GET", article.Link, nil)
+			req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
+			req.Header.Add("Referer", article.Link)
+			cookie := http.Cookie {
+				Name: "over18",
+				Value: "1",
+			}
+			req.AddCookie(&cookie)
+			res, err := client.Do(req)
 			defer res.Body.Close()
 
 			// 最後直接把res傳给goquery就可以來解析網頁
-			doc, err := goquery.NewDocumentFromResponse(res)
+				doc, err := goquery.NewDocumentFromResponse(article.Link)
 				if err != nil {
 					log.Fatal(err)
 				}
 
-				doc.Find("a").Each(func(i int, s *goquery.Selection) {
-					imgLink, _ := s.Attr("href")
-					if strings.Contains(imgLink, ".jpg") && strings.Contains(imgLink, "https") {
-						article.ImageLink = imgLink
+				doc.Find("#main-content > a").EachWithBreak(func(i int, s *goquery.Selection) bool {
+					imgLink := s.Text()
+					if strings.Contains(imgLink, ".jpg") {
+						if strings.Contains(imgLink, "https") {
+							article.ImageLink = imgLink
+							return false
+						}
 					}
+					return true
 				})
-
-
-				// doc.Find("#main-content > a").EachWithBreak(func(i int, s *goquery.Selection) bool {
-				// 	imgLink := s.Text()
-				// 	log.Println(imgLink)
-				// 	log.Println("**********")
-				// 	if strings.Contains(imgLink, ".jpg") {
-				// 		if strings.Contains(imgLink, "https") {
-				// 			article.ImageLink = imgLink
-				// 			return false
-				// 		}
-				// 	}
-				// 	return true
-				// })
 				log.Println(article.Date + " " + forum + "版-" + "標題: (" + article.LikeCountString + ")" + article.Title)
 				db.InsertArticle(article.Title, article.LikeCount, article.Link, article.Date, article.ImageLink, article.LikeCountString, article.Board)
 			}
 		})
 		crawlerCount = crawlerCount + 1
 	}
-
-}
-
-
-func passR18(reqURL string) (req *http.Request) {
-	// 設定 header 以及 滿18歲cookie
-	client:=&http.Client{}
-	req, err := http.NewRequest("GET", reqURL, nil)
-	req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
-	req.Header.Add("Referer", reqURL)
-	cookie := http.Cookie {
-		Name: "over18",
-		Value: "1",
-	}
-	req.AddCookie(&cookie)
-
-	return req
 
 }
