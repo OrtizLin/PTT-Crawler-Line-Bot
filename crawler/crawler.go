@@ -120,6 +120,8 @@ func getAllArticles(forum string) {
 		doc.Find(".btn-group").Each(func(i int, s *goquery.Selection) {
 			if strings.Contains(s.Text(), "上頁") {
 				href, exist = s.Attr("href")
+				log.Println("下一頁的連結")
+				log.Println(href)
 			}
 		})
 
