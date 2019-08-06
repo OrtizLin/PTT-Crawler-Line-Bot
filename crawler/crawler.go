@@ -151,6 +151,11 @@ func getAllArticles(forum string) {
 				}
 				log.Println("搜尋" + article.Link)
 
+			   doc.Find(".main-container").Each(func(i int, s *goquery.Selection){
+      			  log.Println(s.Text())
+				  log.Println("************a")
+    			})
+
 				doc.Find(".main-content").EachWithBreak(func(i int, s *goquery.Selection) bool {
 					log.Println(s.Text())
 					log.Println("************")
