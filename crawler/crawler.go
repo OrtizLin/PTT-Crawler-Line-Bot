@@ -150,9 +150,9 @@ func getAllArticles(forum string) {
 					log.Fatal(err)
 				}
 
-				doc.Find("main-content a").EachWithBreak(func(i int, s *goquery.Selection) bool {
-					print(s.Text())
-					print("************")
+				doc.Find("#main-content > a").EachWithBreak(func(i int, s *goquery.Selection) bool {
+					log.Print(s.Text())
+					log.Print("************")
 					imgLink := s.Text()
 					if strings.Contains(imgLink, ".jpg") {
 						if strings.Contains(imgLink, "https") {
