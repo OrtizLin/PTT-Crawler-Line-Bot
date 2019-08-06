@@ -164,18 +164,26 @@ func getAllArticles(forum string) {
 					log.Fatal(err)
 				}
 
-				doc.Find("#main-content > a").EachWithBreak(func(i int, s *goquery.Selection) bool {
-					imgLink := s.Text()
-					log.Println(imgLink)
-					log.Println("**********")
-					if strings.Contains(imgLink, ".jpg") {
-						if strings.Contains(imgLink, "https") {
-							article.ImageLink = imgLink
-							return false
-						}
+				doc.Find("a").Each(func(i int, s *goquery.Selection) {
+					imgLink, _ := s.Attr("href")
+					if strings.Contains(imgLink, ".jpg") && strings.Contains(imgLink, "https") {
+						article.ImageLink = imgLink
 					}
-					return true
 				})
+
+
+				// doc.Find("#main-content > a").EachWithBreak(func(i int, s *goquery.Selection) bool {
+				// 	imgLink := s.Text()
+				// 	log.Println(imgLink)
+				// 	log.Println("**********")
+				// 	if strings.Contains(imgLink, ".jpg") {
+				// 		if strings.Contains(imgLink, "https") {
+				// 			article.ImageLink = imgLink
+				// 			return false
+				// 		}
+				// 	}
+				// 	return true
+				// })
 				log.Println(article.Date + " " + forum + "版-" + "標題: (" + article.LikeCountString + ")" + article.Title)
 				db.InsertArticle(article.Title, article.LikeCount, article.Link, article.Date, article.ImageLink, article.LikeCountString, article.Board)
 			}
