@@ -80,7 +80,7 @@ func getAllArticles(forum string) {
 
 	var BOOL = true
 	var exist = true
-	var url string = ""  // default url
+	var nextURL string = ""  // default url
 	var href string = "" // next page url
 	var crawlerCount = 0
 
@@ -92,16 +92,17 @@ func getAllArticles(forum string) {
 	for BOOL {
 
 		if href == "" {
-			url = BasePttAddress + "/bbs/" + forum + "/index.html" // 首頁
+			nextURL = BasePttAddress + "/bbs/" + forum + "/index.html" // 首頁
 		} else {
-			url = BasePttAddress + href // 翻至下一頁
+			nextURL = BasePttAddress + href // 翻至下一頁
 		}
 
+		log.Println(nextURL)
 	// 設定 header 以及 滿18歲cookie
 	client:=&http.Client{}
-	req, err := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest("GET", nextURL, nil)
 	req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
-	req.Header.Add("Referer", url)
+	req.Header.Add("Referer", nextURL)
 	cookie := http.Cookie {
 		Name: "over18",
 		Value: "1",
