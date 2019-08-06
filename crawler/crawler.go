@@ -119,6 +119,12 @@ func getAllArticles(forum string) {
 
 		//Find previous link
 		doc.Find(".btn-group").Each(func(i int, s *goquery.Selection) {
+
+			if i == 1 {
+				log.Println("******")
+				log.Println(s.Attr("href"))
+			}
+
 			if strings.Contains(s.Text(), "上頁") {
 				href, exist = s.Attr("href")
 			}
