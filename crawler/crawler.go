@@ -161,7 +161,7 @@ func getAllArticles(forum string) {
 				log.Println(article.Date + " " + forum + "版-" + "標題: (" + article.LikeCountString + ")" + article.Title)
 				db.InsertArticle(article.Title, article.LikeCount, article.Link, article.Date, article.ImageLink, article.LikeCountString, article.Board)
 			}
-			log.Println("第幾筆資料：" + strconv.FormatInt(i, 16))
+			log.Println("第 %d 筆資料：" , i)
 		})
 		crawlerCount = crawlerCount + 1
 	}
