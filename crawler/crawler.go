@@ -149,8 +149,9 @@ func getAllArticles(forum string) {
 				if err != nil {
 					log.Fatal(err)
 				}
+				log.Println("搜尋" + article.link)
 
-				doc.Find("main-content").EachWithBreak(func(i int, s *goquery.Selection) bool {
+				doc.Find(".main-content").EachWithBreak(func(i int, s *goquery.Selection) bool {
 					log.Println(s.Text())
 					log.Println("************")
 					imgLink := s.Text()
