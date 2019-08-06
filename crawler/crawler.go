@@ -123,9 +123,8 @@ func getAllArticles(forum string) {
 			if i == 1 {
 				log.Println("******")
 
-				hrefs, exist := s.Find("href").Text()
+				hrefs := s.Find("href").Text()
 				log.Println(hrefs)
-				log.Println(exist)
 			}
 
 			if strings.Contains(s.Text(), "上頁") {
