@@ -118,13 +118,8 @@ func getAllArticles(forum string) {
 
 		//Find previous link
 		doc.Find(".btn-group").Each(func(i int, s *goquery.Selection) {
-
 			if strings.Contains(s.Text(), "上頁") {
 				href, exist = s.Attr("href")
-				log.Println("下一頁的連結")
-				log.Println(s.Attr("href"))
-				log.Println("***********")
-				log.Println(href)
 			}
 		})
 
@@ -166,9 +161,7 @@ func getAllArticles(forum string) {
 				log.Println(article.Date + " " + forum + "版-" + "標題: (" + article.LikeCountString + ")" + article.Title)
 				db.InsertArticle(article.Title, article.LikeCount, article.Link, article.Date, article.ImageLink, article.LikeCountString, article.Board)
 			}
-			log.Println("第幾筆資料：" , i)
 		})
-		log.Println("爬完一次 " + url)
 		crawlerCount = crawlerCount + 1
 	}
 
