@@ -154,7 +154,7 @@ func getAllArticles(forum string) {
 				}
 
 				doc.Find("main-content a").EachWithBreak(func(i int, s *goquery.Selection) bool {
-					imgLink, exist := s.Attr("href")
+					imgLink := s.Attr("href")
 					log.Println("*******")
 					log.Println(imgLink)
 					if strings.Contains(imgLink, ".jpg") {
