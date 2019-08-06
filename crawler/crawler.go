@@ -144,26 +144,19 @@ func getAllArticles(forum string) {
 			// 今日文章且未被刪除（被刪除文章url會變成BasePttAddress)
 			// 若文章內含有https及.jpg 的字串, 儲存為article.ImageLink.
 			if article.Date == time.Format("1/02") && article.Link != BasePttAddress {
-
-				log.Println("搜尋文章...." + article.Link)
-
 				//search image link in article
 				doc, err := goquery.NewDocument(article.Link)
 				if err != nil {
 					log.Fatal(err)
 				}
 
-				doc.Find("main-content a").EachWithBreak(func(i int, s *goquery.Selection) bool {
-					imgLink, exist := s.Attr("href")
-					log.Println("*******")
-					log.Println(imgLink)
-					if exist == true {
+				doc.Find("#main-content > a").EachWithBreak(func(i int, s *goquery.Selection) bool {
+					imgLink := s.Text()
 					if strings.Contains(imgLink, ".jpg") {
 						if strings.Contains(imgLink, "https") {
 							article.ImageLink = imgLink
 							return false
 						}
-					}
 					}
 					return true
 				})
