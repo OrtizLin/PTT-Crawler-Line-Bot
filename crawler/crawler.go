@@ -120,16 +120,10 @@ func getAllArticles(forum string) {
 		//Find previous link
 		doc.Find(".btn-group a").Each(func(i int, s *goquery.Selection) {
 
-			if i == 1 {
-				log.Println("******")
-				hrefs, exist := s.Attr("href")
-				log.Println(hrefs)
-				log.Println(exist)
-			}
-
 			if strings.Contains(s.Text(), "上頁") {
 				href, exist = s.Attr("href")
 			}
+			
 		})
 
 		doc.Find(".r-ent").Each(func(i int, s *goquery.Selection) {
